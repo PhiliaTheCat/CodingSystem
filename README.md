@@ -1,3 +1,7 @@
 # CodingSystem
 A project designed for encryption, decryption, etc.
-Generally, I suppose my program be able to encrypt and decrypt any Streaming Coding System, but apparently I can't do this perfectly, for I am just a beginner of C.
+Generally, I suppose my program be able to encrypt and decrypt with any Streaming Coding System, but apparently I can't do this perfectly.
+
+# Push Logs
+Nov. 18, 2021 Add colour to significant info
+              Several lines in function "getkey" to prevent invalid key input (including uppercases, numbers and special signals)
