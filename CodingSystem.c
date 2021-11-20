@@ -6,8 +6,9 @@
 void colour(int);
 int mainmenu();
 void encryption();
-void getkey(char *, int *);
+void getstr(char *, int *, int);
 void merge(char *);
+void process(char *, char *, char *, int);
 
 int main()
 {
@@ -64,80 +65,119 @@ int mainmenu()
 void encryption()
 {
     system("cls");
-    char *key = (char *)calloc(27, sizeof(char));
-    int keystatus = -1; //Initiate keystatus as not set
+    char *key = (char *)calloc(201, sizeof(char));
+    char *mes = (char *)calloc(201, sizeof(char));
+    char *res = (char *)calloc(201, sizeof(char));
+    int keystatus = -1, messtatus = -1; //Initiate string status as not set
     while (keystatus < 0) //Waiting for valid key
     {
         printf("---------------Encryption Mode---------------\n");
-        getkey(key, &keystatus);
+        getstr(key, &keystatus, 0);
         if (keystatus < 0)
             system("cls");
     }
-    printf("Key accepted\n");
-    colour(4);
-    printf("ANY REPEATING CHARACTERS WILL BE MERGED\n");
-    colour(7);
-    system("pause");
     merge(key);
-    printf("Processed Key: %s\n", key);
+    printf("Please confirm your key: %s\n", key);
+    system("pause");
+    system("cls");
+    while (messtatus < 0) //Waiting for valid message
+    {
+        printf("---------------Encryption Mode---------------\n");
+        getstr(mes, &messtatus, 1);
+        if (messtatus < 0)
+            system("cls");
+    }
+    process(mes, key, res, 0);
+    printf("---------------Encryption Mode---------------\n");
+    printf("Encrypted message: %s", res);
     system("pause");
 }
 
-void getkey(char *key, int *keystatus)
+void getstr(char *str, int *strstatus, int condition)
 {
-    switch (*keystatus) //Notice varies based on keystatus
+    switch (*strstatus) //Notice varies based on strstatus
     {
         case -1:
-            printf("Please type in your key in ");
-            colour(4);
-            printf("lowercase\nONE WORD ONLY\nNO SPECIAL SIGNAL OR NUMBER ALLOWED\n");
-            colour(7);
-            printf("Key: ");
-            scanf("%s", key);
+            if (condition == 0)
+                printf("Please type in your key in ");
+            else if (condition == 1)
+                printf("Please type in your message in ");
+            colour(4); //Trun the texts into red
+            printf("LOWERCASE\nNO SPACE, SPECIAL SIGNAL OR NUMBER ALLOWED\n");
+            colour(7); //Turn the texts back to white
+            if (condition == 0)
+                printf("Key: ");
+            else if (condition == 1)
+                printf("Message: ");
+            scanf("%s", str);
             break;
         case -2:
-            colour(4);
-            printf("Invalid: Uppercase in key detected\n");
-            colour(7);
-            printf("Pleas type in your key again\n");
-            printf("Key: ");
-            scanf("%s", key);
+            colour(4); //Trun the texts into red
+            printf("Invalid: Uppercase detected\n");
+            colour(7); //Turn the texts back to white
+            if (condition == 0)
+            {
+                printf("Please type in your key again\n");
+                printf("Key: ");
+            }
+            else if (condition == 1)
+            {
+                printf("Please type in your message again\n");
+                printf("Message: ");
+            }
+            scanf("%s", str);
             break;
         case -3:
-            colour(4);
-            printf("Invalid: Special signal in key detected\n");
-            colour(7);
-            printf("Pleas type in your key again\n");
-            printf("Key: ");
-            scanf("%s", key);
+            colour(4); //Trun the texts into red
+            printf("Invalid: Special signal detected\n");
+            colour(7); //Turn the texts back to white
+            if (condition == 0)
+            {
+                printf("Please type in your key again\n");
+                printf("Key: ");
+            }
+            else if (condition == 1)
+            {
+                printf("Please type in your message again\n");
+                printf("Message: ");
+            }
+            scanf("%s", str);
             break;
         case -4:
-            colour(4);
-            printf("Invalid: Number in key detected\n");
-            colour(7);
-            printf("Pleas type in your key again\n");
-            printf("Key: ");
-            scanf("%s", key);
+            colour(4); //Trun the texts into red
+            printf("Invalid: Number detected\n");
+            colour(7); //Turn the texts back to white
+            if (condition == 0)
+            {
+                printf("Please type in your key again\n");
+                printf("Key: ");
+            }
+            else if (condition == 1)
+            {
+                printf("Please type in your message again\n");
+                printf("Message: ");
+            }
+            scanf("%s", str);
             break;
     }
-    *keystatus = 0; //Assumption that key is valid
-    for (int i = 1; i <= 26; i += 1) //Key validation
+    *strstatus = 0; //Assumption that the string is valid
+    for (int i = 1; ; i += 1) //String validation
     {
-        if (*(key + i - 1) == 0) //Stop at the end of the key string
+        if (*(str + i - 1) == 0) //Stop at the end of the string
             break;
-        else if (*(key + i - 1) >= 48 && *(key + i - 1) <= 57) //Invalid: Number
+        else if (*(str + i - 1) >= 48 && *(str + i - 1) <= 57) //Invalid: Number
         {
-            *keystatus = -4;
-            break;
-        }
-        if (*(key + i - 1) >= 65 && *(key + i - 1) <= 90) //Invalid: Uppercase
-        {
-            *keystatus = -2;
+            *strstatus = -4;
             break;
         }
-        else if (*(key + i - 1) < 65 || *(key + i - 1) > 122) //Invalid: Special signal
+        if (*(str + i - 1) >= 65 && *(str + i - 1) <= 90) //Invalid: Uppercase
         {
-            *keystatus = -3;
+            *strstatus = -2;
+            break;
+        }
+        else if (*(str + i - 1) < 65 || *(str + i - 1) > 122) //Invalid: Special signal
+        {
+            *strstatus = -3;
             break;
         }
     }
@@ -145,18 +185,40 @@ void getkey(char *key, int *keystatus)
 
 void merge(char *key)
 {
-    for (int i = 1; i <= 26; i += 1)
+    for (int i = 1; ; i += 1)
     {
         char check = *(key + i - 1);
-        if (check == 0) //Stop at the end of the key string
+        if (check == 0) //Stop at the end of string
             break;
-        for (int k = i + 1; k <= 26; k += 1)
+        for (int k = i + 1; ; k += 1)
         {
             if (check == *(key + k - 1)) //Search for repeating characters
             {
                 *(key + k - 1) = 0; //Turn the repeating character into a blank
                 strcat(key, (key + k)); //Remove the blank
+                k -= 1; //Roll back to previous character
             }
+            if (*(key + k) == 0) //Stop at the end of string
+                break;
         }
+    }
+}
+
+void process(char *mes, char *key, char *res, int condition)
+{
+    int keysize;
+    keysize = strlen(key);
+    switch (condition)
+    {
+        case 0: //Encryption
+            for (int i = 1; ; i += 1)
+            {
+                if (*(mes + i - 1) == 0) //Stop at the end of message
+                    break;
+                char result = *(mes + i - 1) + *(key + (i - 1) % keysize) - 97;
+                if (result > 122)
+                    result -= 26;
+                *(res + i - 1) = result;
+            }
     }
 }
