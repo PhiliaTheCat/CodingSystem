@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <time.h>
 
 void colour(int);
 int mainmenu();
@@ -10,6 +11,8 @@ void decryption();
 void getstr(char *, int *, int);
 void merge(char *);
 void process(char *, char *, char *, int);
+void writelog(char *, char *, char *, int);
+void readlog();
 
 int main()
 {
@@ -23,6 +26,8 @@ int main()
         case 1:
             decryption();
             break;
+        case 2:
+            readlog();
     }
 }
 
@@ -250,21 +255,51 @@ void process(char *mes, char *key, char *res, int condition)
                 if (*(mes + i - 1) == 0) //Stop at the end of message
                     break;
                 int result = 0;
-                result = (int)*(mes + i - 1) + (int)*(key + (i - 1) % keysize) - 97;
+                result = (int)*(mes + i - 1) + (int)*(key + (i - 1) % keysize) - 97; //res = mes + key - 97
                 if (result > 122)
                     result = result - 26;
                 *(res + i - 1) = (char)result;
             }
+            break;
         case 1: //Decryption
             for (int i = 1; ; i += 1)
             {
                 if (*(mes + i - 1) == 0) //Stop at the end of message
                     break;
                 int result = 0;
-                result = (int)*(mes + i - 1) - (int)*(key + (i - 1) % keysize) + 97;
+                result = (int)*(mes + i - 1) - (int)*(key + (i - 1) % keysize) + 97; //res = mes - key + 97
                 if (result < 97)
                     result = result + 26;
                 *(res + i - 1) = (char)result;
             }
+            break;
     }
+    writelog(mes, key, res, condition);
+}
+
+void writelog(char *mes, char *key, char *res, int condition)
+{
+    FILE *LOG;
+    LOG = fopen("LOGS.txt", "a+");
+    time_t now;
+    time(&now);
+    struct tm *local = localtime(&now);
+    int year = local -> tm_year + 1900;
+    int month = local -> tm_mon + 1;
+    int day = local -> tm_mday;
+    int hour = local -> tm_hour;
+    int min = local -> tm_min;
+    int sec = local -> tm_sec;
+    fprintf(LOG, "|%d/%02d/%02d| |%02d:%02d:%02d| ", year, month, day, hour, min, sec);
+    switch (condition)
+    {
+        case 0:
+            fprintf(LOG, "|ENCRYPTION| ");
+            break;
+        case 1:
+            fprintf(LOG, "|DECRYPTION| ");
+            break;
+    }
+    fprintf(LOG, "|%s| |%s| |%s|\n", mes, key, res);
+}
 }
