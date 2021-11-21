@@ -12,7 +12,6 @@ void getstr(char *, int *, int);
 void merge(char *);
 void process(char *, char *, char *, int);
 void writelog(char *, char *, char *, int);
-void readlog();
 
 int main()
 {
@@ -26,8 +25,8 @@ int main()
         case 1:
             decryption();
             break;
-        case 2:
-            readlog();
+        /*case 2:
+            readlog();*/
     }
 }
 
@@ -45,6 +44,7 @@ int mainmenu()
     {
         printf("----------------Coding System---------------\n");
         printf("0 --- Encryption            1 --- Decryption\n");
+        printf("2 --- Read logs\n");
         switch (selected)
         {
             case -1: //Default
@@ -59,7 +59,7 @@ int mainmenu()
         }
         printf("Option: ");
         scanf("%d", &selected);
-        if (selected >= 2)
+        if (selected >= 3)
         {
             selected = -2;
             system("cls");
@@ -125,7 +125,7 @@ void decryption()
         if (messtatus < 0) //Clear screen if failed
             system("cls");
     }
-    process(mes, key, res, 1);
+    process(mes, key, res, 1); //Process decryption, 1 for decryption
     system("cls");
     printf("---------------Decryption Mode---------------\n");
     printf("Decrypted message: %s", res);
@@ -301,5 +301,4 @@ void writelog(char *mes, char *key, char *res, int condition)
             break;
     }
     fprintf(LOG, "|%s| |%s| |%s|\n", mes, key, res);
-}
 }
