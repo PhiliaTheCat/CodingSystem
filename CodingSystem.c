@@ -4,6 +4,15 @@
 #include <windows.h>
 #include <time.h>
 
+typedef struct line
+{
+    char *d, *t;
+    char *condition;
+    char *mes, *key, *res;
+    struct line *next;
+}
+LINE;
+
 void colour(int);
 int mainmenu();
 void encryption();
@@ -12,6 +21,7 @@ void getstr(char *, int *, int);
 void merge(char *);
 void process(char *, char *, char *, int);
 void writelog(char *, char *, char *, int);
+void readlog();
 
 int main()
 {
@@ -25,8 +35,8 @@ int main()
         case 1:
             decryption();
             break;
-        /*case 2:
-            readlog();*/
+        case 2:
+            readlog();
     }
 }
 
@@ -96,7 +106,7 @@ void encryption()
     process(mes, key, res, 0); //Process encryption, 0 for encryption
     system("cls");
     printf("---------------Encryption Mode---------------\n");
-    printf("Encrypted message: %s", res);
+    printf("Encrypted message: %s\n", res);
     system("pause");
 }
 
@@ -128,7 +138,7 @@ void decryption()
     process(mes, key, res, 1); //Process decryption, 1 for decryption
     system("cls");
     printf("---------------Decryption Mode---------------\n");
-    printf("Decrypted message: %s", res);
+    printf("Decrypted message: %s\n", res);
     system("pause");
 }
 
@@ -279,8 +289,8 @@ void process(char *mes, char *key, char *res, int condition)
 
 void writelog(char *mes, char *key, char *res, int condition)
 {
-    FILE *LOG;
-    LOG = fopen("LOGS.txt", "a+");
+    FILE *WRITELOG;
+    WRITELOG = fopen("logs.txt", "a+b");
     time_t now;
     time(&now);
     struct tm *local = localtime(&now);
@@ -290,15 +300,63 @@ void writelog(char *mes, char *key, char *res, int condition)
     int hour = local -> tm_hour;
     int min = local -> tm_min;
     int sec = local -> tm_sec;
-    fprintf(LOG, "|%d/%02d/%02d| |%02d:%02d:%02d| ", year, month, day, hour, min, sec);
+    fprintf(WRITELOG, "%d/%02d/%02d %02d:%02d:%02d ", year, month, day, hour, min, sec);
     switch (condition)
     {
         case 0:
-            fprintf(LOG, "|ENCRYPTION| ");
+            fprintf(WRITELOG, "ENCRYPTION ");
             break;
         case 1:
-            fprintf(LOG, "|DECRYPTION| ");
+            fprintf(WRITELOG, "DECRYPTION ");
             break;
     }
-    fprintf(LOG, "|%s| |%s| |%s|\n", mes, key, res);
+    fprintf(WRITELOG, "%s %s %s\n", mes, key, res);
+}
+
+void readlog()
+{
+    FILE *READLOG;
+    READLOG = fopen("logs.txt", "rb");
+    LINE *head, *local;
+    local = (LINE *)calloc(1, sizeof(LINE));
+    head = local;
+    while (1)
+    {
+        local -> d = calloc(11, sizeof(char));
+        local -> t = calloc(9, sizeof(char));
+        local -> condition = calloc(11, sizeof(char));
+        local -> mes = calloc(201, sizeof(char));
+        local -> key = calloc(53, sizeof(char));
+        local -> res = calloc(201, sizeof(char));
+        fscanf(READLOG, "%s", local -> d);
+        fscanf(READLOG, "%s", local -> t);
+        fscanf(READLOG, "%s", local -> condition);
+        fscanf(READLOG, "%s", local -> mes);
+        fscanf(READLOG, "%s", local -> key);
+        fscanf(READLOG, "%s", local -> res);
+        READLOG->_ptr += 1;
+        if (*(READLOG->_ptr) == 0)
+        {
+            local -> next = NULL;
+            break;
+        }
+        else
+        {
+            local -> next = (LINE *)calloc(1, sizeof(LINE));
+            local = local -> next;
+        }
+    }
+    local = head;
+    system("cls");
+    while (1)
+    {
+        printf("%s %s ", local -> d, local -> t);
+        printf("%s ", local -> condition);
+        printf("%s %s %s\n", local -> mes, local -> key, local -> res);
+        if (local -> next == NULL)
+            break;
+        else
+            local = local -> next;
+    }
+    system("pause");
 }

@@ -4,6 +4,10 @@
         "string.h": "c",
         "stdio.h": "c",
         "windows.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "typeinfo": "c",
+        "limits": "c",
+        "*.tcc": "c",
+        "type_traits": "c"
     }
 }
