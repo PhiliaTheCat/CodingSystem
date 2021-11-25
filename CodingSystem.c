@@ -49,33 +49,36 @@ void colour(int col)
 
 int mainmenu()
 {
-    int selected = -1;
-    while (selected < 0)
+    char selected;
+    int choice = -1;
+    while (choice < 0)
     {
         printf("----------------Coding System---------------\n");
         printf("0 --- Encryption            1 --- Decryption\n");
         printf("2 --- Read logs\n");
-        switch (selected)
+        switch (choice)
         {
             case -1: //Default
                 printf("Please type in the number attached to your option\n");
                 break;
-            case -2:
+            case -2: //Invalid: Input overflowed
                 colour(4); //Turn the texts into red
                 printf("Invalid option input\n");
                 colour(7); //Turn the texts back to white
-                printf("Please type in the number again\n");
+                printf("Please type in a number again\n");
                 break;
         }
         printf("Option: ");
-        scanf("%d", &selected);
-        if (selected >= 3)
+        scanf("%c", &selected);
+        if (selected < 48 || selected > 50)
         {
-            selected = -2;
+            choice = -2;
             system("cls");
         }
+        else
+            choice = (int)selected - 48;
     }
-    return selected;
+    return choice;
 }
 
 void encryption()
