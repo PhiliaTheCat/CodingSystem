@@ -318,8 +318,17 @@ void writelog(char *mes, char *key, char *res, int condition)
 
 void readlog()
 {
+    system("cls");
     FILE *READLOG;
     READLOG = fopen("logs.txt", "rb");
+    if (READLOG == NULL)
+    {
+        colour(4);
+        printf("No logs file detected\n");
+        colour(7);
+        system("pause");
+        return;
+    }
     LINE *head, *local;
     local = (LINE *)calloc(1, sizeof(LINE));
     head = local;
@@ -350,7 +359,6 @@ void readlog()
         }
     }
     local = head;
-    system("cls");
     while (1)
     {
         printf("%s %s ", local -> d, local -> t);
