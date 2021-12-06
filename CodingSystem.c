@@ -25,18 +25,30 @@ void readlog();
 
 int main()
 {
-    int selected;
-    selected = mainmenu(); //User Decision
-    switch (selected) //Function switching
+    int selected = -1;
+    while (selected < 0)
     {
-        case 0:
-            encryption();
-            break;
-        case 1:
-            decryption();
-            break;
-        case 2:
-            readlog();
+        selected = mainmenu(); //User Decision
+        switch (selected) //Function switching
+        {
+            case 0:
+                encryption();
+                selected = -1;
+                break;
+            case 1:
+                decryption();
+                selected = -1;
+                break;
+            case 2:
+                readlog();
+                selected = -1;
+                break;
+            case 3:
+                system("cls");
+                printf("Programme exited\n");
+                system("pause");
+                exit(0);
+        }
     }
 }
 
@@ -49,13 +61,14 @@ void colour(int col)
 
 int mainmenu()
 {
-    char selected;
+    system("cls");
+    int selected = -1;
     int choice = -1;
     while (choice < 0)
     {
         printf("----------------Coding System---------------\n");
         printf("0 --- Encryption            1 --- Decryption\n");
-        printf("2 --- Read logs\n");
+        printf("2 --- Read logs             3 --- Exit\n");
         switch (choice)
         {
             case -1: //Default
@@ -69,16 +82,17 @@ int mainmenu()
                 break;
         }
         printf("Option: ");
-        scanf("%c", &selected);
-        if (selected < 48 || selected > 50)
+        scanf("%d", &selected);
+        rewind(stdin);
+        if (selected < 0 || selected > 3)
         {
             choice = -2;
             system("cls");
         }
         else
-            choice = (int)selected - 48;
+            choice = 1;
     }
-    return choice;
+    return selected;
 }
 
 void encryption()
