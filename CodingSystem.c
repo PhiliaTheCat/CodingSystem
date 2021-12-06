@@ -328,6 +328,7 @@ void writelog(char *mes, char *key, char *res, int condition)
             break;
     }
     fprintf(WRITELOG, "%s %s %s\n", mes, key, res);
+    fclose(WRITELOG);
 }
 
 void readlog()
@@ -383,5 +384,6 @@ void readlog()
         else
             local = local -> next;
     }
+    fclose(READLOG);
     system("pause");
 }
