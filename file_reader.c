@@ -1,4 +1,4 @@
-//Don't forget to free(the returned char*)
+// Don't forget to free(the returned char*)
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
@@ -21,8 +21,8 @@ char *read_file(void)
     char *directory = NULL, *content = NULL;
     char alone;
     int i;
-    puts("Enter the direcory to the source file pls:");
 
+    puts("Enter the direcory to the source file pls:");
     i = 0;
     while (1)
     {
@@ -52,6 +52,7 @@ char *read_file(void)
         i++;
     }
     content[i] = '\0';
+    EXIT_CHECK((void *)(!fclose(src_file)), "FILE CLOSE FAILED")
     puts("The content of the file is shown as follows:");
     puts("\n");
 
