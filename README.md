@@ -7,4 +7,4 @@ Generally, I suppose my program be able to encrypt and decrypt with any Streamin
                 Several lines in function "getkey" to prevent invalid key input (including uppercases, numbers and special signals).
 * Nov. 20, 2021: Function "encryption" compeleted.  
                 Bugs in function "merge" fixed.
-* Dec. &nbsp;&nbsp;8, 2021: Added func file_reader.
+* Dec. 8, 2021: Added func file_reader.

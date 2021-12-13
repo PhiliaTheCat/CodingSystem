@@ -18,6 +18,7 @@ int mainmenu();
 void encryption();
 void decryption();
 void getstr(char *, int *, int);
+int tolow(char *);
 void merge(char *);
 void process(char *, char *, char *, int);
 void writelog(char *, char *, char *, int);
@@ -109,6 +110,16 @@ void encryption()
         if (keystatus < 0) //Clear screen if failed
             system("cls");
     }
+    if (tolow(key))
+    {
+        system("cls");
+        colour(4);
+        printf("UPPERCASE(S) INSIDE\n");
+        printf("AUTOMATICLY REPLACED\n");
+        colour(7);
+        system("pause");
+    }
+    system("cls");
     merge(key);
     printf("Please confirm your key: %s\n", key);
     system("pause");
@@ -119,6 +130,15 @@ void encryption()
         getstr(mes, &messtatus, 1); //Initiate message
         if (messtatus < 0) //Clear screen if failed
             system("cls");
+    }
+    if (tolow(mes))
+    {
+        system("cls");
+        colour(4);
+        printf("UPPERCASE(S) INSIDE\n");
+        printf("AUTOMATICLY REPLACED\n");
+        colour(7);
+        system("pause");
     }
     process(mes, key, res, 0); //Process encryption, 0 for encryption
     system("cls");
@@ -141,6 +161,16 @@ void decryption()
         if (keystatus < 0) //Clear screen if failed
             system("cls");
     }
+    if (tolow(key))
+    {
+        system("cls");
+        colour(4);
+        printf("UPPERCASE(S) INSIDE\n");
+        printf("AUTOMATICLY REPLACED\n");
+        colour(7);
+        system("pause");
+    }
+    system("cls");
     merge(key);
     printf("Please confirm your key: %s\n", key);
     system("pause");
@@ -151,6 +181,15 @@ void decryption()
         getstr(mes, &messtatus, 1); //Initiate message
         if (messtatus < 0) //Clear screen if failed
             system("cls");
+    }
+    if (tolow(mes))
+    {
+        system("cls");
+        colour(4);
+        printf("UPPERCASE(S) INSIDE\n");
+        printf("AUTOMATICLY REPLACED\n");
+        colour(7);
+        system("pause");
     }
     process(mes, key, res, 1); //Process decryption, 1 for decryption
     system("cls");
@@ -169,33 +208,19 @@ void getstr(char *str, int *strstatus, int condition)
             else if (condition == 1)
                 printf("Please type in your message in ");
             colour(4); //Trun the texts into red
-            printf("LOWERCASE\nNO SPACE, SPECIAL SIGNAL OR NUMBER ALLOWED\n");
+            printf("English\nALL CHARCTERS AFTER THE FIRST SPACE WILL BE IGNORED\n");
+            printf("NO SPECIAL CHARACTERS OR NUMBER ALLOWED\n");
             colour(7); //Turn the texts back to white
             if (condition == 0)
                 printf("Key: ");
             else if (condition == 1)
                 printf("Message: ");
             scanf("%s", str);
-            break;
-        case -2:
-            colour(4);
-            printf("Invalid: Uppercase detected\n");
-            colour(7);
-            if (condition == 0)
-            {
-                printf("Please type in your key again\n");
-                printf("Key: ");
-            }
-            else if (condition == 1)
-            {
-                printf("Please type in your message again\n");
-                printf("Message: ");
-            }
-            scanf("%s", str);
+            fflush(stdin);
             break;
         case -3:
             colour(4);
-            printf("Invalid: Special signal detected\n");
+            printf("Invalid: Special character detected\n");
             colour(7);
             if (condition == 0)
             {
@@ -208,6 +233,7 @@ void getstr(char *str, int *strstatus, int condition)
                 printf("Message: ");
             }
             scanf("%s", str);
+            fflush(stdin);
             break;
         case -4:
             colour(4);
@@ -224,6 +250,7 @@ void getstr(char *str, int *strstatus, int condition)
                 printf("Message: ");
             }
             scanf("%s", str);
+            fflush(stdin);
             break;
     }
     *strstatus = 0; //Assumption that the string is valid
@@ -236,17 +263,28 @@ void getstr(char *str, int *strstatus, int condition)
             *strstatus = -4;
             break;
         }
-        if (*(str + i - 1) >= 65 && *(str + i - 1) <= 90) //Invalid: Uppercase
-        {
-            *strstatus = -2;
-            break;
-        }
         else if (*(str + i - 1) < 65 || *(str + i - 1) > 122) //Invalid: Special signal
         {
             *strstatus = -3;
             break;
         }
     }
+}
+
+int tolow(char *str)
+{
+    int statu = 0;
+    for (int i = 1; ; i += 1)
+    {
+        if (*(str + i - 1) == 0)
+            break;
+        if (*(str + i - 1) >= 65 && *(str + i - 1) <= 90)
+        {
+            *(str + i - 1) += 32;
+            statu = 1;
+        }
+    }
+    return statu;
 }
 
 void merge(char *key)
