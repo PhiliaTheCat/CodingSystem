@@ -4,25 +4,31 @@
 #include <windows.h>
 #include <time.h>
 
-typedef struct line
-{
-    char *d, *t;
-    char *condition;
-    char *mes, *key, *res;
-    struct line *next;
-}
-LINE;
+#define MAX1 53 //2 * 26 + 1
+#define MAX2 201 //200 + 1
 
-void colour(int);
-int mainmenu();
-void encryption();
-void decryption();
-void getstr(char *, int *, int);
-int tolow(char *);
-void merge(char *);
-void process(char *, char *, char *, int);
-void writelog(char *, char *, char *, int);
-void readlog();
+typedef struct node
+{
+    char *d; //Date
+    char *t; //Time
+    char *condition; //Programme mode
+    char *mes; //Message
+    char *key; //Key
+    char *res; //Result
+    struct node *next; //Next node
+}
+NODE;
+
+void colour(int); //Change text colour, 4 for red, 7 for white
+int mainmenu(); //Display mainmenu
+void encryption(); //Encryption preparation
+void decryption(); //Decryption preparation
+void getstr(char *, int *, int); //Read string from stdin
+int tolow(char *); //Turn all the uppercases into lowercases
+void merge(char *); //Merge all the repeating characters in a string
+void process(char *, char *, char *, int); //Process encryption or decryption, 0 for encryption, 1 for decryption
+void writelog(char *, char *, char *, int); //Write logs into logs.txt
+void readlog(); //Read logs from logs.txt
 
 int main()
 {
@@ -99,9 +105,9 @@ int mainmenu()
 void encryption()
 {
     system("cls");
-    char *key = (char *)calloc(53, sizeof(char)); //2 * 26 + 1
-    char *mes = (char *)calloc(201, sizeof(char)); //200 + 1
-    char *res = (char *)calloc(201, sizeof(char));
+    char *key = (char *)calloc(MAX1, sizeof(char));
+    char *mes = (char *)calloc(MAX2, sizeof(char));
+    char *res = (char *)calloc(MAX2, sizeof(char));
     int keystatus = -1, messtatus = -1; //Initiate string status as not set (default)
     while (keystatus < 0) //Waiting for valid key
     {
@@ -150,9 +156,9 @@ void encryption()
 void decryption()
 {
     system("cls");
-    char *key = (char *)calloc(53, sizeof(char)); //2 * 26 + 1
-    char *mes = (char *)calloc(201, sizeof(char)); //200 + 1
-    char *res = (char *)calloc(201, sizeof(char));
+    char *key = (char *)calloc(MAX1, sizeof(char));
+    char *mes = (char *)calloc(MAX2, sizeof(char));
+    char *res = (char *)calloc(MAX2, sizeof(char));
     int keystatus = -1, messtatus = -1; //Initiate string status as not set (default)
     while (keystatus < 0) //Waiting for valid key string
     {
@@ -382,17 +388,17 @@ void readlog()
         system("pause");
         return;
     }
-    LINE *head, *local;
-    local = (LINE *)calloc(1, sizeof(LINE));
+    NODE *head, *local;
+    local = (NODE *)calloc(1, sizeof(NODE));
     head = local;
     while (1)
     {
         local -> d = calloc(11, sizeof(char));
         local -> t = calloc(9, sizeof(char));
         local -> condition = calloc(11, sizeof(char));
-        local -> mes = calloc(201, sizeof(char));
-        local -> key = calloc(53, sizeof(char));
-        local -> res = calloc(201, sizeof(char));
+        local -> mes = calloc(MAX2, sizeof(char));
+        local -> key = calloc(MAX1, sizeof(char));
+        local -> res = calloc(MAX2, sizeof(char));
         fscanf(READLOG, "%s", local -> d);
         fscanf(READLOG, "%s", local -> t);
         fscanf(READLOG, "%s", local -> condition);
@@ -407,16 +413,17 @@ void readlog()
         }
         else
         {
-            local -> next = (LINE *)calloc(1, sizeof(LINE));
+            local -> next = (NODE *)calloc(1, sizeof(NODE));
             local = local -> next;
         }
     }
+    printf("Example: yyyy/mm/dd hh:mm:ss mode mes --key--> res\n");
     local = head;
     while (1)
     {
         printf("%s %s ", local -> d, local -> t);
         printf("%s ", local -> condition);
-        printf("%s %s %s\n", local -> mes, local -> key, local -> res);
+        printf("%s --%s--> %s\n", local -> mes, local -> key, local -> res);
         if (local -> next == NULL)
             break;
         else
