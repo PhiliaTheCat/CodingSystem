@@ -8,3 +8,5 @@ Generally, I suppose my program be able to encrypt and decrypt with any Streamin
 * Nov. 20, 2021: Function "encryption" compeleted.  
                 Bugs in function "merge" fixed.
 * Dec. 8, 2021: Added func file_reader.
+* Dec. 14, 2021: Compatibility with uppercases added.
+* Dec. 16, 2021: Code restructed, function "readlog" advanced.
