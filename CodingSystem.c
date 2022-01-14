@@ -4,8 +4,19 @@
 #include <windows.h>
 #include <time.h>
 
-#define MAX1 53 //2 * 26 + 1
-#define MAX2 201 //200 + 1
+#define MODE_EN 0 //Main Menu: Encryption Mode
+#define MODE_DE 1 //Main Menu: Decryption Mode
+#define MODE_LOG 2 //Main Menu: Logs Mode
+#define MODE_EX 3 //Main Menu: Exit programme
+#define RED 4
+#define WHITE 7
+#define INVALID_DEFAULT -1 //Default value for invalid status
+#define INVALID_IE -2 //Invalid: Input Exceeded
+#define VALID 0 //Default value for valid status
+#define MODE_KEY 0 //Get String: Key
+#define MODE_MES 1 //Get String: Message
+#define MAX_KEY 53 //Maximum length of keys: 2 * 26 + 1
+#define MAX_STR 201 //Maximum length of strings: 200 + 1
 
 typedef struct node
 {
@@ -32,29 +43,25 @@ void readlog(); //Read logs from logs.txt
 
 int main()
 {
-    int selected = -1;
-    while (selected < 0)
+    while (TRUE)
     {
-        selected = mainmenu(); //User Decision
-        switch (selected) //Function switching
+        int decision = mainmenu();
+        switch (decision)
         {
-            case 0:
+            case MODE_EN:
                 encryption();
-                selected = -1;
                 break;
-            case 1:
+            case MODE_DE:
                 decryption();
-                selected = -1;
                 break;
-            case 2:
+            case MODE_LOG:
                 readlog();
-                selected = -1;
                 break;
-            case 3:
+            case MODE_EX:
                 system("cls");
-                printf("Programme exited\n");
+                printf("Programme Exited\n");
                 system("pause");
-                exit(0);
+                exit(EXIT_SUCCESS);
         }
     }
 }
@@ -63,89 +70,76 @@ void colour(int col)
 {
     HANDLE colout;
     colout = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(colout, col); //4 for red, and 7 for white
+    SetConsoleTextAttribute(colout, col);
 }
 
 int mainmenu()
 {
     system("cls");
-    int selected = -1;
-    int choice = -1;
-    while (choice < 0)
+    int decision = INVALID_DEFAULT;
+    int status = INVALID_DEFAULT;
+    while (status != VALID)
     {
         printf("----------------Coding System---------------\n");
         printf("0 --- Encryption            1 --- Decryption\n");
         printf("2 --- Read logs             3 --- Exit\n");
-        switch (choice)
+        switch (status)
         {
-            case -1: //Default
+            case INVALID_DEFAULT:
                 printf("Please type in the number attached to your option\n");
                 break;
-            case -2: //Invalid: Input overflowed
-                colour(4); //Turn the texts into red
+            case INVALID_IE:
+                colour(RED);
                 printf("Invalid option input\n");
-                colour(7); //Turn the texts back to white
+                colour(WHITE);
                 printf("Please type in a number again\n");
                 break;
         }
         printf("Option: ");
-        scanf("%d", &selected);
+        scanf("%d", &decision);
         rewind(stdin);
-        if (selected < 0 || selected > 3)
+        if (decision < MODE_EN || decision > MODE_EX)
         {
-            choice = -2;
+            status = INVALID_IE;
             system("cls");
         }
         else
-            choice = 1;
+            status = VALID;
     }
-    return selected;
+    return decision;
 }
 
 void encryption()
 {
     system("cls");
-    char *key = (char *)calloc(MAX1, sizeof(char));
-    char *mes = (char *)calloc(MAX2, sizeof(char));
-    char *res = (char *)calloc(MAX2, sizeof(char));
-    int keystatus = -1, messtatus = -1; //Initiate string status as not set (default)
-    while (keystatus < 0) //Waiting for valid key
+    char *key = (char *)calloc(MAX_KEY, sizeof(char));
+    char *mes = (char *)calloc(MAX_STR, sizeof(char));
+    char *res = (char *)calloc(MAX_STR, sizeof(char));
+    int keystatus = INVALID_DEFAULT; //Initialize string status
+    int messtatus = INVALID_DEFAULT;
+    while (keystatus != VALID)
     {
         printf("---------------Encryption Mode---------------\n");
-        getstr(key, &keystatus, 0); //Initiate key
-        if (keystatus < 0) //Clear screen if failed
+        getstr(key, &keystatus, MODE_KEY); //Initialize key
+        if (keystatus != VALID) //Clear screen if failed
             system("cls");
     }
-    if (tolow(key))
-    {
-        system("cls");
-        colour(4);
-        printf("UPPERCASE(S) INSIDE\n");
-        printf("AUTOMATICLY REPLACED\n");
-        colour(7);
-        system("pause");
-    }
     system("cls");
+    tolow(key);
     merge(key);
-    printf("Please confirm your key: %s\n", key);
+    printf("Confirm your key: %s\n", key);
     system("pause");
     system("cls");
-    while (messtatus < 0) //Waiting for valid message
+    while (messtatus != VALID) //Waiting for valid message
     {
         printf("---------------Encryption Mode---------------\n");
-        getstr(mes, &messtatus, 1); //Initiate message
-        if (messtatus < 0) //Clear screen if failed
+        getstr(mes, &messtatus, MODE_MES); //Initiate message
+        if (messtatus != VALID) //Clear screen if failed
             system("cls");
     }
-    if (tolow(mes))
-    {
-        system("cls");
-        colour(4);
-        printf("UPPERCASE(S) INSIDE\n");
-        printf("AUTOMATICLY REPLACED\n");
-        colour(7);
-        system("pause");
-    }
+    tolow(mes);
+    printf("Confirm the message: %s\n", mes);
+    system("pause");
     process(mes, key, res, 0); //Process encryption, 0 for encryption
     system("cls");
     printf("---------------Encryption Mode---------------\n");
@@ -156,9 +150,9 @@ void encryption()
 void decryption()
 {
     system("cls");
-    char *key = (char *)calloc(MAX1, sizeof(char));
-    char *mes = (char *)calloc(MAX2, sizeof(char));
-    char *res = (char *)calloc(MAX2, sizeof(char));
+    char *key = (char *)calloc(MAX_KEY, sizeof(char));
+    char *mes = (char *)calloc(MAX_STR, sizeof(char));
+    char *res = (char *)calloc(MAX_STR, sizeof(char));
     int keystatus = -1, messtatus = -1; //Initiate string status as not set (default)
     while (keystatus < 0) //Waiting for valid key string
     {
@@ -167,18 +161,10 @@ void decryption()
         if (keystatus < 0) //Clear screen if failed
             system("cls");
     }
-    if (tolow(key))
-    {
-        system("cls");
-        colour(4);
-        printf("UPPERCASE(S) INSIDE\n");
-        printf("AUTOMATICLY REPLACED\n");
-        colour(7);
-        system("pause");
-    }
     system("cls");
+    tolow(key);
     merge(key);
-    printf("Please confirm your key: %s\n", key);
+    printf("Confirm your key: %s\n", key);
     system("pause");
     system("cls");
     while (messtatus < 0) //Waiting for valid message
@@ -396,9 +382,9 @@ void readlog()
         local -> d = calloc(11, sizeof(char));
         local -> t = calloc(9, sizeof(char));
         local -> condition = calloc(11, sizeof(char));
-        local -> mes = calloc(MAX2, sizeof(char));
-        local -> key = calloc(MAX1, sizeof(char));
-        local -> res = calloc(MAX2, sizeof(char));
+        local -> mes = calloc(MAX_STR, sizeof(char));
+        local -> key = calloc(MAX_KEY, sizeof(char));
+        local -> res = calloc(MAX_STR, sizeof(char));
         fscanf(READLOG, "%s", local -> d);
         fscanf(READLOG, "%s", local -> t);
         fscanf(READLOG, "%s", local -> condition);
