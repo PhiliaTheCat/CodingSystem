@@ -12,11 +12,14 @@
 #define WHITE 7
 #define INVALID_DEFAULT -1 //Default value for invalid status
 #define INVALID_IE -2 //Invalid: Input Exceeded
+#define INVALID_SPEC -3 //Invalid: Special character
+#define INVALID_NUM -4 //Invalid: Number
 #define VALID 0 //Default value for valid status
 #define MODE_KEY 0 //Get String: Key
 #define MODE_MES 1 //Get String: Message
 #define MAX_KEY 53 //Maximum length of keys: 2 * 26 + 1
 #define MAX_STR 201 //Maximum length of strings: 200 + 1
+#define EOS 0 //End of a string
 
 typedef struct node
 {
@@ -34,8 +37,8 @@ void colour(int); //Change text colour, 4 for red, 7 for white
 int mainmenu(); //Display mainmenu
 void encryption(); //Encryption preparation
 void decryption(); //Decryption preparation
-void getstr(char *, int *, int); //Read string from stdin
-int tolow(char *); //Turn all the uppercases into lowercases
+void getstr(char *, int *, int); //Get string from stdin
+void tolow(char *); //Turn all the uppercases into lowercases
 void merge(char *); //Merge all the repeating characters in a string
 void process(char *, char *, char *, int); //Process encryption or decryption, 0 for encryption, 1 for decryption
 void writelog(char *, char *, char *, int); //Write logs into logs.txt
@@ -115,8 +118,7 @@ void encryption()
     char *key = (char *)calloc(MAX_KEY, sizeof(char));
     char *mes = (char *)calloc(MAX_STR, sizeof(char));
     char *res = (char *)calloc(MAX_STR, sizeof(char));
-    int keystatus = INVALID_DEFAULT; //Initialize string status
-    int messtatus = INVALID_DEFAULT;
+    int keystatus = INVALID_DEFAULT, messtatus = INVALID_DEFAULT; //Initialize string status
     while (keystatus != VALID)
     {
         printf("---------------Encryption Mode---------------\n");
@@ -140,7 +142,7 @@ void encryption()
     tolow(mes);
     printf("Confirm the message: %s\n", mes);
     system("pause");
-    process(mes, key, res, 0); //Process encryption, 0 for encryption
+    process(mes, key, res, MODE_EN); //Process encryption, 0 for encryption
     system("cls");
     printf("---------------Encryption Mode---------------\n");
     printf("Encrypted message: %s\n", res);
@@ -153,12 +155,12 @@ void decryption()
     char *key = (char *)calloc(MAX_KEY, sizeof(char));
     char *mes = (char *)calloc(MAX_STR, sizeof(char));
     char *res = (char *)calloc(MAX_STR, sizeof(char));
-    int keystatus = -1, messtatus = -1; //Initiate string status as not set (default)
-    while (keystatus < 0) //Waiting for valid key string
+    int keystatus = INVALID_DEFAULT, messtatus = INVALID_DEFAULT; //Initiate string status as not set (default)
+    while (keystatus != VALID) //Waiting for valid key string
     {
         printf("---------------Decryption Mode---------------\n");
-        getstr(key, &keystatus, 0); //Initiate key
-        if (keystatus < 0) //Clear screen if failed
+        getstr(key, &keystatus, MODE_KEY); //Initiate key
+        if (keystatus != VALID) //Clear screen if failed
             system("cls");
     }
     system("cls");
@@ -167,23 +169,15 @@ void decryption()
     printf("Confirm your key: %s\n", key);
     system("pause");
     system("cls");
-    while (messtatus < 0) //Waiting for valid message
+    while (messtatus != VALID) //Waiting for valid message
     {
         printf("---------------Decryption Mode---------------\n");
-        getstr(mes, &messtatus, 1); //Initiate message
-        if (messtatus < 0) //Clear screen if failed
+        getstr(mes, &messtatus, MODE_MES); //Initiate message
+        if (messtatus != VALID) //Clear screen if failed
             system("cls");
     }
-    if (tolow(mes))
-    {
-        system("cls");
-        colour(4);
-        printf("UPPERCASE(S) INSIDE\n");
-        printf("AUTOMATICLY REPLACED\n");
-        colour(7);
-        system("pause");
-    }
-    process(mes, key, res, 1); //Process decryption, 1 for decryption
+    tolow(mes);
+    process(mes, key, res, MODE_DE); //Process decryption, 1 for decryption
     system("cls");
     printf("---------------Decryption Mode---------------\n");
     printf("Decrypted message: %s\n", res);
@@ -194,32 +188,32 @@ void getstr(char *str, int *strstatus, int condition)
 {
     switch (*strstatus) //Notice varies based on strstatus
     {
-        case -1:
-            if (condition == 0)
+        case INVALID_DEFAULT:
+            if (condition == MODE_KEY)
                 printf("Please type in your key in ");
-            else if (condition == 1)
+            else if (condition == MODE_MES)
                 printf("Please type in your message in ");
-            colour(4); //Trun the texts into red
+            colour(RED);
             printf("English\nALL CHARCTERS AFTER THE FIRST SPACE WILL BE IGNORED\n");
             printf("NO SPECIAL CHARACTERS OR NUMBER ALLOWED\n");
-            colour(7); //Turn the texts back to white
-            if (condition == 0)
+            colour(WHITE);
+            if (condition == MODE_KEY)
                 printf("Key: ");
-            else if (condition == 1)
+            else if (condition == MODE_MES)
                 printf("Message: ");
             scanf("%s", str);
             fflush(stdin);
             break;
-        case -3:
-            colour(4);
+        case INVALID_SPEC:
+            colour(RED);
             printf("Invalid: Special character detected\n");
-            colour(7);
-            if (condition == 0)
+            colour(WHITE);
+            if (condition == MODE_KEY)
             {
                 printf("Please type in your key again\n");
                 printf("Key: ");
             }
-            else if (condition == 1)
+            else if (condition == MODE_MES)
             {
                 printf("Please type in your message again\n");
                 printf("Message: ");
@@ -227,16 +221,16 @@ void getstr(char *str, int *strstatus, int condition)
             scanf("%s", str);
             fflush(stdin);
             break;
-        case -4:
-            colour(4);
+        case INVALID_NUM:
+            colour(RED);
             printf("Invalid: Number detected\n");
-            colour(7);
-            if (condition == 0)
+            colour(WHITE);
+            if (condition == MODE_KEY)
             {
                 printf("Please type in your key again\n");
                 printf("Key: ");
             }
-            else if (condition == 1)
+            else if (condition == MODE_MES)
             {
                 printf("Please type in your message again\n");
                 printf("Message: ");
@@ -245,38 +239,33 @@ void getstr(char *str, int *strstatus, int condition)
             fflush(stdin);
             break;
     }
-    *strstatus = 0; //Assumption that the string is valid
+    *strstatus = VALID; //Preset that the string is valid
     for (int i = 1; ; i += 1) //String validation
     {
-        if (*(str + i - 1) == 0) //Stop at the end of the string
+        if (*(str + i - 1) == EOS) //Stop at the end of the string
             break;
-        else if (*(str + i - 1) >= 48 && *(str + i - 1) <= 57) //Invalid: Number
+        else if (*(str + i - 1) >= '0' && *(str + i - 1) <= '9') //Invalid: Number
         {
-            *strstatus = -4;
+            *strstatus = INVALID_NUM;
             break;
         }
-        else if (*(str + i - 1) < 65 || *(str + i - 1) > 122) //Invalid: Special signal
+        else if (!((*(str + i - 1) >= 'A' && *(str + i - 1) <= 'Z') || (*(str + i - 1) >= 'a' && *(str + i - 1) <= 'z'))) //Invalid: Special character
         {
-            *strstatus = -3;
+            *strstatus = INVALID_SPEC;
             break;
         }
     }
 }
 
-int tolow(char *str)
+void tolow(char *str)
 {
-    int statu = 0;
     for (int i = 1; ; i += 1)
     {
-        if (*(str + i - 1) == 0)
+        if (*(str + i - 1) == EOS)
             break;
-        if (*(str + i - 1) >= 65 && *(str + i - 1) <= 90)
-        {
+        if (*(str + i - 1) >= 'A' && *(str + i - 1) <= 'Z')
             *(str + i - 1) += 32;
-            statu = 1;
-        }
     }
-    return statu;
 }
 
 void merge(char *key)
@@ -284,48 +273,45 @@ void merge(char *key)
     for (int i = 1; ; i += 1)
     {
         char check = *(key + i - 1);
-        if (check == 0) //Stop at the end of string
+        if (check == EOS) //Stop at the end of string
             break;
         for (int k = i + 1; ; k += 1)
         {
-            if (check == *(key + k - 1)) //Search for repeating characters
+            if (*(key + k - 1) == EOS) //Stop at the end of string
+                break;
+            if (check == *(key + k - 1)) //Search for repeating character
             {
-                *(key + k - 1) = 0; //Turn the repeating character into a blank
-                strcat(key, (key + k)); //Remove the blank
+                *(key + k - 1) = EOS; //Break the string at that character
+                strcat(key, (key + k)); //Connect two strings
                 k -= 1; //Roll back to previous character
             }
-            if (*(key + k) == 0) //Stop at the end of string
-                break;
         }
     }
 }
 
 void process(char *mes, char *key, char *res, int condition)
 {
-    int keysize;
-    keysize = strlen(key);
+    int keysize = strlen(key);
     switch (condition)
     {
-        case 0: //Encryption
+        case MODE_EN:
             for (int i = 1; ; i += 1)
             {
-                if (*(mes + i - 1) == 0) //Stop at the end of message
+                if (*(mes + i - 1) == EOS) //Stop at the end of message
                     break;
-                int result = 0;
-                result = (int)*(mes + i - 1) + (int)*(key + (i - 1) % keysize) - 97; //res = mes + key - 97
-                if (result > 122)
+                int result = (int)*(mes + i - 1) + (int)*(key + (i - 1) % keysize) - 97; //res = mes + key - 97
+                if (result > 'z')
                     result = result - 26;
                 *(res + i - 1) = (char)result;
             }
             break;
-        case 1: //Decryption
+        case MODE_DE:
             for (int i = 1; ; i += 1)
             {
-                if (*(mes + i - 1) == 0) //Stop at the end of message
+                if (*(mes + i - 1) == EOS) //Stop at the end of message
                     break;
-                int result = 0;
-                result = (int)*(mes + i - 1) - (int)*(key + (i - 1) % keysize) + 97; //res = mes - key + 97
-                if (result < 97)
+                int result = (int)*(mes + i - 1) - (int)*(key + (i - 1) % keysize) + 97; //res = mes - key + 97
+                if (result < 'a')
                     result = result + 26;
                 *(res + i - 1) = (char)result;
             }
@@ -336,8 +322,7 @@ void process(char *mes, char *key, char *res, int condition)
 
 void writelog(char *mes, char *key, char *res, int condition)
 {
-    FILE *WRITELOG;
-    WRITELOG = fopen("logs.txt", "a+b");
+    FILE *WRITELOG = fopen("logs.txt", "a+b");
     time_t now;
     time(&now);
     struct tm *local = localtime(&now);
@@ -350,10 +335,10 @@ void writelog(char *mes, char *key, char *res, int condition)
     fprintf(WRITELOG, "%d/%02d/%02d %02d:%02d:%02d ", year, month, day, hour, min, sec);
     switch (condition)
     {
-        case 0:
+        case MODE_EN:
             fprintf(WRITELOG, "ENCRYPTION ");
             break;
-        case 1:
+        case MODE_DE:
             fprintf(WRITELOG, "DECRYPTION ");
             break;
     }
@@ -364,20 +349,19 @@ void writelog(char *mes, char *key, char *res, int condition)
 void readlog()
 {
     system("cls");
-    FILE *READLOG;
-    READLOG = fopen("logs.txt", "rb");
+    FILE *READLOG = fopen("logs.txt", "rb");
     if (READLOG == NULL)
     {
-        colour(4);
+        colour(RED);
         printf("No logs file detected\n");
-        colour(7);
+        colour(WHITE);
         system("pause");
         return;
     }
     NODE *head, *local;
     local = (NODE *)calloc(1, sizeof(NODE));
     head = local;
-    while (1)
+    while (TRUE)
     {
         local -> d = calloc(11, sizeof(char));
         local -> t = calloc(9, sizeof(char));
@@ -392,7 +376,7 @@ void readlog()
         fscanf(READLOG, "%s", local -> key);
         fscanf(READLOG, "%s", local -> res);
         READLOG->_ptr += 1;
-        if (*(READLOG->_ptr) == 0)
+        if (*(READLOG->_ptr) == EOS)
         {
             local -> next = NULL;
             break;
@@ -405,7 +389,7 @@ void readlog()
     }
     printf("Example: yyyy/mm/dd hh:mm:ss mode mes --key--> res\n");
     local = head;
-    while (1)
+    while (TRUE)
     {
         printf("%s %s ", local -> d, local -> t);
         printf("%s ", local -> condition);
