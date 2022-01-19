@@ -8,3 +8,4 @@ Generally, I suppose my program be able to encrypt and decrypt with any Streamin
 * Dec. 8, 2021: Added func file_reader.
 * Dec. 14, 2021: Compatibility with uppercases added.
 * Dec. 16, 2021: Code restructed, function "readlog" advanced.
+* Jan, 19, 2022: Code restructed, several changes on description.
