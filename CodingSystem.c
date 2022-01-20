@@ -33,7 +33,8 @@ typedef struct node
 }
 NODE;
 
-void colour(int); //Change text colour, 4 for red, 7 for white
+void colour(int);
+void notice(char *);
 int mainmenu(); //Display mainmenu
 void encryption(); //Encryption preparation
 void decryption(); //Decryption preparation
@@ -71,9 +72,15 @@ int main()
 
 void colour(int col)
 {
-    HANDLE colout;
-    colout = GetStdHandle(STD_OUTPUT_HANDLE);
+    HANDLE colout = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(colout, col);
+}
+
+void notice(char *string)
+{
+    colour(RED);
+    printf("%s", string);
+    colour(WHITE);
 }
 
 int mainmenu()
@@ -92,9 +99,7 @@ int mainmenu()
                 printf("Please type in the number attached to your option\n");
                 break;
             case INVALID_IE:
-                colour(RED);
-                printf("Invalid option input\n");
-                colour(WHITE);
+                notice("Invalid option input\n");
                 printf("Please type in a number again\n");
                 break;
         }
@@ -193,10 +198,8 @@ void getstr(char *str, int *strstatus, int condition)
                 printf("Please type in your key in ");
             else if (condition == MODE_MES)
                 printf("Please type in your message in ");
-            colour(RED);
-            printf("English\nALL CHARCTERS AFTER THE FIRST SPACE WILL BE IGNORED\n");
-            printf("NO SPECIAL CHARACTERS OR NUMBER ALLOWED\n");
-            colour(WHITE);
+            notice("English\nALL CHARCTERS AFTER THE FIRST SPACE WILL BE IGNORED\n");
+            notice("NO SPECIAL CHARACTERS OR NUMBER ALLOWED\n");
             if (condition == MODE_KEY)
                 printf("Key: ");
             else if (condition == MODE_MES)
@@ -205,9 +208,7 @@ void getstr(char *str, int *strstatus, int condition)
             fflush(stdin);
             break;
         case INVALID_SPEC:
-            colour(RED);
-            printf("Invalid: Special character detected\n");
-            colour(WHITE);
+            notice("Invalid: Special character detected\n");
             if (condition == MODE_KEY)
             {
                 printf("Please type in your key again\n");
@@ -222,9 +223,7 @@ void getstr(char *str, int *strstatus, int condition)
             fflush(stdin);
             break;
         case INVALID_NUM:
-            colour(RED);
-            printf("Invalid: Number detected\n");
-            colour(WHITE);
+            notice("Invalid: Number detected\n");
             if (condition == MODE_KEY)
             {
                 printf("Please type in your key again\n");
@@ -352,9 +351,7 @@ void readlog()
     FILE *READLOG = fopen("logs.txt", "rb");
     if (READLOG == NULL)
     {
-        colour(RED);
-        printf("No logs file detected\n");
-        colour(WHITE);
+        notice("No logs file detected\n");
         system("pause");
         return;
     }
