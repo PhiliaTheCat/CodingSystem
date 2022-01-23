@@ -92,14 +92,14 @@ int mainmenu()
     {
         printf("----------------Coding System---------------\n");
         printf("0 --- Encryption            1 --- Decryption\n");
-        printf("2 --- Read logs             3 --- Exit\n");
+        printf("2 --- Logs                  3 --- Exit\n");
         switch (status)
         {
             case INVALID_DEFAULT:
                 printf("Please type in the number attached to your option\n");
                 break;
             case INVALID_IE:
-                notice("Invalid option input\n");
+                notice("Invalid: Input Exceeded\n");
                 printf("Please type in a number again\n");
                 break;
         }
@@ -208,7 +208,7 @@ void getstr(char *str, int *strstatus, int condition)
             fflush(stdin);
             break;
         case INVALID_SPEC:
-            notice("Invalid: Special character detected\n");
+            notice("Invalid: Special Character\n");
             if (condition == MODE_KEY)
             {
                 printf("Please type in your key again\n");
@@ -223,7 +223,7 @@ void getstr(char *str, int *strstatus, int condition)
             fflush(stdin);
             break;
         case INVALID_NUM:
-            notice("Invalid: Number detected\n");
+            notice("Invalid: Number\n");
             if (condition == MODE_KEY)
             {
                 printf("Please type in your key again\n");
@@ -348,6 +348,7 @@ void writelog(char *mes, char *key, char *res, int condition)
 void readlog()
 {
     system("cls");
+    printf("----------------Logs Mode---------------");
     FILE *READLOG = fopen("logs.txt", "rb");
     if (READLOG == NULL)
     {
