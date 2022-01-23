@@ -239,11 +239,9 @@ void getstr(char *str, int *strstatus, int condition)
             break;
     }
     *strstatus = VALID; //Preset that the string is valid
-    for (int i = 1; ; i += 1) //String validation
+    for (int i = 1; *(str + i - 1) != EOS; i += 1) //String validation
     {
-        if (*(str + i - 1) == EOS) //Stop at the end of the string
-            break;
-        else if (*(str + i - 1) >= '0' && *(str + i - 1) <= '9') //Invalid: Number
+        if (*(str + i - 1) >= '0' && *(str + i - 1) <= '9') //Invalid: Number
         {
             *strstatus = INVALID_NUM;
             break;
@@ -258,10 +256,8 @@ void getstr(char *str, int *strstatus, int condition)
 
 void tolow(char *str)
 {
-    for (int i = 1; ; i += 1)
+    for (int i = 1; *(str + i - 1) != EOS; i += 1)
     {
-        if (*(str + i - 1) == EOS)
-            break;
         if (*(str + i - 1) >= 'A' && *(str + i - 1) <= 'Z')
             *(str + i - 1) += 32;
     }
@@ -269,15 +265,11 @@ void tolow(char *str)
 
 void merge(char *key)
 {
-    for (int i = 1; ; i += 1)
+    for (int i = 1; *(key + i - 1) != EOS; i += 1)
     {
         char check = *(key + i - 1);
-        if (check == EOS) //Stop at the end of string
-            break;
-        for (int k = i + 1; ; k += 1)
+        for (int k = i + 1; *(key + k - 1) != EOS; k += 1)
         {
-            if (*(key + k - 1) == EOS) //Stop at the end of string
-                break;
             if (check == *(key + k - 1)) //Search for repeating character
             {
                 *(key + k - 1) = EOS; //Break the string at that character
@@ -294,10 +286,8 @@ void process(char *mes, char *key, char *res, int condition)
     switch (condition)
     {
         case MODE_EN:
-            for (int i = 1; ; i += 1)
+            for (int i = 1; *(mes + i - 1) != EOS; i += 1)
             {
-                if (*(mes + i - 1) == EOS) //Stop at the end of message
-                    break;
                 int result = (int)*(mes + i - 1) + (int)*(key + (i - 1) % keysize) - 97; //res = mes + key - 97
                 if (result > 'z')
                     result = result - 26;
@@ -305,10 +295,8 @@ void process(char *mes, char *key, char *res, int condition)
             }
             break;
         case MODE_DE:
-            for (int i = 1; ; i += 1)
+            for (int i = 1; *(mes + i - 1) != EOS; i += 1)
             {
-                if (*(mes + i - 1) == EOS) //Stop at the end of message
-                    break;
                 int result = (int)*(mes + i - 1) - (int)*(key + (i - 1) % keysize) + 97; //res = mes - key + 97
                 if (result < 'a')
                     result = result + 26;
@@ -352,51 +340,41 @@ void readlog()
     FILE *READLOG = fopen("logs.txt", "rb");
     if (READLOG == NULL)
     {
-        notice("No logs file detected\n");
+        notice("No logs\n");
         system("pause");
         return;
     }
-    NODE *head, *local;
-    local = (NODE *)calloc(1, sizeof(NODE));
-    head = local;
-    while (TRUE)
+    NODE *temp = NULL;
+    do
     {
+        NODE *local = (NODE *)calloc(1, sizeof(NODE));
         local -> d = calloc(11, sizeof(char));
         local -> t = calloc(9, sizeof(char));
         local -> condition = calloc(11, sizeof(char));
         local -> mes = calloc(MAX_STR, sizeof(char));
         local -> key = calloc(MAX_KEY, sizeof(char));
         local -> res = calloc(MAX_STR, sizeof(char));
+        local -> next = temp;
         fscanf(READLOG, "%s", local -> d);
         fscanf(READLOG, "%s", local -> t);
         fscanf(READLOG, "%s", local -> condition);
         fscanf(READLOG, "%s", local -> mes);
         fscanf(READLOG, "%s", local -> key);
         fscanf(READLOG, "%s", local -> res);
-        READLOG->_ptr += 1;
-        if (*(READLOG->_ptr) == EOS)
-        {
-            local -> next = NULL;
-            break;
-        }
-        else
-        {
-            local -> next = (NODE *)calloc(1, sizeof(NODE));
-            local = local -> next;
-        }
+        READLOG -> _ptr += 1;
+        temp = local;
     }
+    while (*(READLOG -> _ptr) != EOS);
+    fclose(READLOG);
     printf("Example: yyyy/mm/dd hh:mm:ss mode mes --key--> res\n");
-    local = head;
-    while (TRUE)
+    NODE *head = temp;
+    NODE *local = head;
+    while (local != NULL)
     {
         printf("%s %s ", local -> d, local -> t);
         printf("%s ", local -> condition);
         printf("%s --%s--> %s\n", local -> mes, local -> key, local -> res);
-        if (local -> next == NULL)
-            break;
-        else
-            local = local -> next;
+        local = local -> next;
     }
-    fclose(READLOG);
     system("pause");
 }
