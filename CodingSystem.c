@@ -406,24 +406,36 @@ void readlog()
 
 void settings()
 {
+    int status = INVALID_DEFAULT;
     system("cls");
-    printf("-------------------Settings-------------------\n");
-    printf("Current Settings:\n");
-    printf("(0)Maximum Length of String: %d\n", global.max_str);
-    printf("(1)Maximum Length of Key: %d\n", global.max_key);
-    printf("(2)Logs Reading Sequence: ");
-    switch (global.logs_seque)
+    while (status != VALID)
     {
-        case SEQUE_TIME_DE:
-            printf("Timestamp Decreasing\n");
-            break;
-        case SEQUE_TIME_IN:
-            printf("Timestamp Increasing\n");
-            break;
+        printf("-------------------Settings-------------------\n");
+        printf("Current Settings:\n");
+        printf("(0)Maximum Length of String: %d\n", global.max_str);
+        printf("(1)Maximum Length of Key: %d\n", global.max_key);
+        printf("(2)Logs Reading Sequence: ");
+        switch (global.logs_seque)
+        {
+            case SEQUE_TIME_DE:
+                printf("Timestamp Decreasing\n");
+                break;
+            case SEQUE_TIME_IN:
+                printf("Timestamp Increasing\n");
+                break;
+        }
+        int item;
+        printf("Please specify the item you want to change (-1 to quit): ");
+        scanf("%d", &item);
+        rewind(stdin);
+        if (item == -1)
+            return;
+        if (item >= 0 && item <= 2)
+            status = VALID;
+        else
+        {
+            status = INVALID_IE;
+            system("cls");
+        }
     }
-    int item;
-    printf("Please specify the item (0 - 2) you want to change: ");
-    scanf("%d", &item);
-    rewind(stdin);
-
 }
