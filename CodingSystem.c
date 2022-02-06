@@ -7,7 +7,8 @@
 #define MODE_EN 0 //Main Menu: Encryption Mode
 #define MODE_DE 1 //Main Menu: Decryption Mode
 #define MODE_LOG 2 //Main Menu: Logs Mode
-#define MODE_EX 3 //Main Menu: Exit programme
+#define MODE_SET 3 //Main Menu: Settings
+#define MODE_EX 4 //Main Menu: Exit programme
 #define RED 4
 #define WHITE 7
 #define INVALID_DEFAULT -1 //Default value for invalid status
@@ -17,9 +18,11 @@
 #define VALID 0 //Default value for valid status
 #define MODE_KEY 0 //Get String: Key
 #define MODE_MES 1 //Get String: Message
-#define MAX_KEY 53 //Maximum length of keys: 2 * 26 + 1
-#define MAX_STR 201 //Maximum length of strings: 200 + 1
+#define MAX_KEY (global.max_key + 1) //Maximum memory size of keys
+#define MAX_STR (global.max_str + 1) //Maximum memory size of strings
 #define EOS 0 //End of a string
+#define SEQUE_TIME_DE 0 //Logs Reading Sequence: Timestamp Decreasing (Default)
+#define SEQUE_TIME_IN 1 //Logs Reading Sequence: Timestamp Increasing
 
 typedef struct node
 {
@@ -33,8 +36,17 @@ typedef struct node
 }
 NODE;
 
-void colour(int);
-void notice(char *);
+struct setting
+{
+    int max_key;
+    int max_str;
+    int logs_seque;
+}
+global;
+
+void preset(); //Preset before main function
+void colour(int); //Change colour of texts
+void notice(char *); //Use red texts to alert
 int mainmenu(); //Display mainmenu
 void encryption(); //Encryption preparation
 void decryption(); //Decryption preparation
@@ -44,9 +56,11 @@ void merge(char *); //Merge all the repeating characters in a string
 void process(char *, char *, char *, int); //Process encryption or decryption, 0 for encryption, 1 for decryption
 void writelog(char *, char *, char *, int); //Write logs into logs.txt
 void readlog(); //Read logs from logs.txt
+void settings(); //Change settings
 
 int main()
 {
+    preset();
     while (TRUE)
     {
         int decision = mainmenu();
@@ -61,6 +75,9 @@ int main()
             case MODE_LOG:
                 readlog();
                 break;
+            case MODE_SET:
+                settings();
+                break;
             case MODE_EX:
                 system("cls");
                 printf("Programme Exited\n");
@@ -68,6 +85,13 @@ int main()
                 exit(EXIT_SUCCESS);
         }
     }
+}
+
+void preset()
+{
+    global.max_key = 52; //2 * 26
+    global.max_str = 200;
+    global.logs_seque = SEQUE_TIME_DE;
 }
 
 void colour(int col)
@@ -92,7 +116,8 @@ int mainmenu()
     {
         printf("----------------Coding System---------------\n");
         printf("0 --- Encryption            1 --- Decryption\n");
-        printf("2 --- Logs                  3 --- Exit\n");
+        printf("2 --- Logs                  3 --- Settings\n");
+        printf("4 --- Exit\n");
         switch (status)
         {
             case INVALID_DEFAULT:
@@ -336,7 +361,7 @@ void writelog(char *mes, char *key, char *res, int condition)
 void readlog()
 {
     system("cls");
-    printf("----------------Logs Mode---------------");
+    printf("----------------------Logs---------------------");
     FILE *READLOG = fopen("logs.txt", "rb");
     if (READLOG == NULL)
     {
@@ -377,4 +402,28 @@ void readlog()
         local = local -> next;
     }
     system("pause");
+}
+
+void settings()
+{
+    system("cls");
+    printf("-------------------Settings-------------------\n");
+    printf("Current Settings:\n");
+    printf("(0)Maximum Length of String: %d\n", global.max_str);
+    printf("(1)Maximum Length of Key: %d\n", global.max_key);
+    printf("(2)Logs Reading Sequence: ");
+    switch (global.logs_seque)
+    {
+        case SEQUE_TIME_DE:
+            printf("Timestamp Decreasing\n");
+            break;
+        case SEQUE_TIME_IN:
+            printf("Timestamp Increasing\n");
+            break;
+    }
+    int item;
+    printf("Please specify the item (0 - 2) you want to change: ");
+    scanf("%d", &item);
+    rewind(stdin);
+
 }
