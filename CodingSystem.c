@@ -56,7 +56,7 @@ void merge(char *); //Merge all the repeating characters in a string
 void process(char *, char *, char *, int); //Process encryption or decryption, 0 for encryption, 1 for decryption
 void writelog(char *, char *, char *, int); //Write logs into logs.txt
 void readlog(); //Read logs from logs.txt
-void settings(); //Change settings
+void settings(); //Display current settings
 
 int main()
 {
@@ -406,36 +406,5 @@ void readlog()
 
 void settings()
 {
-    int status = INVALID_DEFAULT;
-    system("cls");
-    while (status != VALID)
-    {
-        printf("-------------------Settings-------------------\n");
-        printf("Current Settings:\n");
-        printf("(0)Maximum Length of String: %d\n", global.max_str);
-        printf("(1)Maximum Length of Key: %d\n", global.max_key);
-        printf("(2)Logs Reading Sequence: ");
-        switch (global.logs_seque)
-        {
-            case SEQUE_TIME_DE:
-                printf("Timestamp Decreasing\n");
-                break;
-            case SEQUE_TIME_IN:
-                printf("Timestamp Increasing\n");
-                break;
-        }
-        int item;
-        printf("Please specify the item you want to change (-1 to quit): ");
-        scanf("%d", &item);
-        rewind(stdin);
-        if (item == -1)
-            return;
-        if (item >= 0 && item <= 2)
-            status = VALID;
-        else
-        {
-            status = INVALID_IE;
-            system("cls");
-        }
-    }
+    
 }
