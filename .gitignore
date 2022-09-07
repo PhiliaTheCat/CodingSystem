@@ -1,2 +1,2 @@
-logs.txt
-CodingSystem.exe
+lib/*.o
+bin/*.exe
