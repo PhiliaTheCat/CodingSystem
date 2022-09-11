@@ -5,7 +5,7 @@
     {
         int max_key; // Maximum key length
         int max_str; // Maximum string length
-        int logs_seque; // Sequence when display logs
+        int logs_sequence; // Sequence when display logs
     }
     GlobalSet;
 

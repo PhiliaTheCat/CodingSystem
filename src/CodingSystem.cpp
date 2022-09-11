@@ -1,6 +1,8 @@
 #include <iostream>
+#include <fstream>
 
 #include "../include/Settings"
+#include "../include/Main_Menu"
 
 using namespace std;
 
@@ -9,7 +11,8 @@ extern GlobalSet global;
 int main()
 {
     Preset();
-    cout << global.max_key << endl;
-    cout << global.max_str << endl;
-    cout << global.logs_seque << endl;
+    int decision = Make_Decision();
+    ofstream fout;
+    fout.open("../output.txt");
+    fout << decision << endl;
 }

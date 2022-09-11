@@ -1,0 +1,6 @@
+#ifndef __INCLUDE_MAIN_MENU__
+    #define __INCLUDE_MAIN_MENU__
+
+    int Make_Decision();
+    inline bool Decision_Is_Valid(int &decision);
+#endif

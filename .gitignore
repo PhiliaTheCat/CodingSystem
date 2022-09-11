@@ -1,2 +1,3 @@
 lib/*.o
 bin/*.exe
+output.txt
