@@ -7,6 +7,7 @@ using namespace std;
 
 const int DECISION_INVALID_DEFAULT = -1;
 const int DECISION_INVALID_NUMBER_EXCEEDED = -2;
+
 const int DECISION_ENCRYPTION = 0;
 const int DECISION_DECRYPTION = 1;
 const int DECISION_LOGS = 2;
@@ -16,13 +17,16 @@ const int DECISION_EXIT = 4;
 int Make_Decision()
 {
     int decision = DECISION_INVALID_DEFAULT;
+
     while (!Decision_Is_Valid(decision))
     {
         system("cls");
+
         cout << "----------------Coding System---------------\n";
         cout << "0 --- Encryption            1 --- Decryption\n";
         cout << "2 --- Logs                  3 --- Settings\n";
         cout << "4 --- Exit\n";
+
         switch (decision)
         {
             case DECISION_INVALID_DEFAULT:
@@ -33,6 +37,7 @@ int Make_Decision()
                 cout << "Please type in a number again\n";
                 break;
         }
+        
         cout << "Your Option: ";
         cin >> decision;
     }

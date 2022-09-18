@@ -1,0 +1,6 @@
+#ifndef __INCLUDE_CRYPTOLOGY__
+    #define __INCLUDE_CRYPTOLOGY__
+
+    void Capitalize(char key[]);
+    void Format(char key[]);
+#endif
