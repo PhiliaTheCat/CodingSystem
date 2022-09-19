@@ -1,4 +1,8 @@
+#include <iostream>
+
 #include "../include/Cryptology"
+
+using namespace std;
 
 void Capitalize(char key[])
 {
@@ -27,4 +31,15 @@ void Format(char key[])
         else if (flag[key[j] - 65] == true)
             j += 1;
     }
+}
+
+bool Deny_Key()
+{
+    char res;
+    cout << "Enter Y/N to Confirm/Deny: ";
+    cin >> res;
+    if (res == 'Y' || res == 'y')
+        return true;
+    else 
+        return false;
 }

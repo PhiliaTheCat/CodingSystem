@@ -9,12 +9,6 @@ using namespace std;
 
 extern GlobalSet global;
 
-const int DECISION_ENCRYPTION = 0;
-const int DECISION_DECRYPTION = 1;
-const int DECISION_LOGS = 2;
-const int DECISION_SETTINGS = 3;
-const int DECISION_EXIT = 4;
-
 int main()
 {
     Preset();

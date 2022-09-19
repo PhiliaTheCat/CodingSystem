@@ -5,15 +5,6 @@
 
 using namespace std;
 
-const int DECISION_INVALID_DEFAULT = -1;
-const int DECISION_INVALID_NUMBER_EXCEEDED = -2;
-
-const int DECISION_ENCRYPTION = 0;
-const int DECISION_DECRYPTION = 1;
-const int DECISION_LOGS = 2;
-const int DECISION_SETTINGS = 3;
-const int DECISION_EXIT = 4;
-
 int Make_Decision()
 {
     int decision = DECISION_INVALID_DEFAULT;

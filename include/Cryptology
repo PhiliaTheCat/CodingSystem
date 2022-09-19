@@ -3,4 +3,5 @@
 
     void Capitalize(char key[]);
     void Format(char key[]);
+    bool Deny_Key();
 #endif

@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstdlib>
 
 #include "../include/Encryption"
 #include "../include/Settings"
@@ -24,7 +23,7 @@ void Encryption()
         Capitalize(key);
         Format(key);
     }
-    while (1);
+    while (Deny_Key());
 
     delete [] key;
     delete [] mes;
