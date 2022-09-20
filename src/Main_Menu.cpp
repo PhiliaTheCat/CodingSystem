@@ -31,6 +31,7 @@ int Make_Decision()
         
         cout << "Your Option: ";
         cin >> decision;
+        cin.get();
     }
     return decision;
 }

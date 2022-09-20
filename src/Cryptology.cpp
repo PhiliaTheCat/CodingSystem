@@ -37,7 +37,8 @@ bool Deny_Key()
 {
     char res;
     cout << "Enter Y/N to Confirm/Deny: ";
-    cin >> res;
+    cin.get(res);
+    cin.get();
     if (res == 'Y' || res == 'y')
         return true;
     else 

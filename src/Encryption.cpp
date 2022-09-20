@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 
 #include "../include/Encryption"
 #include "../include/Settings"
@@ -16,6 +17,7 @@ void Encryption()
 
     do 
     {
+        system("cls");
         cout << "---------------Encryption Mode---------------\n";
         cout << "Please type in your key\n";
         cout << "Your key: ";
