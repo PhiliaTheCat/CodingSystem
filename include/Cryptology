@@ -1,7 +1,12 @@
 #ifndef __INCLUDE_CRYPTOLOGY__
     #define __INCLUDE_CRYPTOLOGY__
 
+    // String Proceeding
     void Capitalize(char key[]);
     void Format(char key[]);
-    bool Deny_Key();
+
+    // Confirmation
+    bool Deny_Str(char str[], int branch);
+
+    
 #endif

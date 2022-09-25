@@ -25,7 +25,18 @@ void Encryption()
         Capitalize(key);
         Format(key);
     }
-    while (Deny_Key());
+    while (Deny_Str(key, 0));
+
+    do 
+    {
+        system("cls");
+        cout << "---------------Encryption Mode---------------\n";
+        cout << "Please type in your message\n";
+        cout << "Your message: ";
+        cin.getline(mes, global.max_str + 1);
+        Capitalize(mes);
+    }
+    while (Deny_Str(mes, 1));
 
     delete [] key;
     delete [] mes;
