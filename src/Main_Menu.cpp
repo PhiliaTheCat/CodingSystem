@@ -24,7 +24,7 @@ int Make_Decision()
                 cout << "Please type in the number attached to your option\n";
                 break;
             case DECISION_INVALID_NUMBER_EXCEEDED:
-                cout << "Invalid: Number Exceeded\n";
+                cerr << "Invalid: Number Exceeded\n";
                 cout << "Please type in a number again\n";
                 break;
         }
