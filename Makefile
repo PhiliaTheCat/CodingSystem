@@ -1,20 +1,24 @@
-bin/CodingSystem.exe: lib/Settings.o lib/Main_Menu.o \
-	lib/Encryption.o lib/Cryptology.o lib/CodingSystem.o
-	g++ lib/Settings.o lib/Main_Menu.o \
-		lib/Encryption.o lib/Cryptology.o lib/CodingSystem.o \
+bin/CodingSystem.exe: lib/Settings.lib lib/Main_Menu.lib \
+	lib/Encryption.lib lib/Cryptology.lib lib/CodingSystem.lib
+	g++ lib/Settings.lib lib/Main_Menu.lib \
+		lib/Encryption.lib lib/Cryptology.lib lib/CodingSystem.lib \
 		-o bin/CodingSystem.exe
 
-lib/Settings.o: src/Settings.cpp
-	g++ -c src/Settings.cpp -o lib/Settings.o
+lib/Settings.lib: src/Settings.cpp
+	g++ -c src/Settings.cpp -o lib/Settings.lib
 
-lib/Main_Menu.o: src/Main_Menu.cpp 
-	g++ -c src/Main_Menu.cpp -o lib/Main_Menu.o
+lib/Main_Menu.lib: src/Main_Menu.cpp 
+	g++ -c src/Main_Menu.cpp -o lib/Main_Menu.lib
 
-lib/Encryption.o: src/Encryption.cpp
-	g++ -c src/Encryption.cpp -o lib/Encryption.o
+lib/Encryption.lib: src/Encryption.cpp
+	g++ -c src/Encryption.cpp -o lib/Encryption.lib
 
-lib/Cryptology.o: src/Cryptology.cpp
-	g++ -c src/Cryptology.cpp -o lib/Cryptology.o
+lib/Cryptology.lib: src/Cryptology.cpp
+	g++ -c src/Cryptology.cpp -o lib/Cryptology.lib
 
-lib/CodingSystem.o: src/CodingSystem.cpp 
-	g++ -c src/CodingSystem.cpp -o lib/CodingSystem.o
+lib/CodingSystem.lib: src/CodingSystem.cpp 
+	g++ -c src/CodingSystem.cpp -o lib/CodingSystem.lib
+
+run: bin/CodingSystem.exe
+	./bin/CodingSystem.exe
+	

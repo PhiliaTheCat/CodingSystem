@@ -2,6 +2,7 @@
 #include <cstdlib>
 
 #include "../include/Cryptology"
+#include "../include/Settings"
 
 using namespace std;
 

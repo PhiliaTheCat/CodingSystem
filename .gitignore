@@ -1,3 +1,3 @@
-lib/*.o
+lib/*.lib
 bin/*.exe
 output.txt

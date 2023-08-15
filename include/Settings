@@ -1,13 +1,12 @@
 #ifndef __INCLUDE_SETTINGS__
     #define __INCLUDE_SETTINGS__
 
-    typedef struct Global_Settings
+    struct Global_Settings
     {
         int max_key; // Maximum key length
         int max_str; // Maximum string length
         int logs_sequence; // Sequence when display logs
-    }
-    GlobalSet;
+    };
 
     // Provide pre-settings before execution
     void Preset();

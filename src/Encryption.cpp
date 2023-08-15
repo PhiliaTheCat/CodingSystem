@@ -7,7 +7,7 @@
 
 using namespace std;
 
-extern GlobalSet global;
+extern Global_Settings global;
 
 void Encryption()
 {
