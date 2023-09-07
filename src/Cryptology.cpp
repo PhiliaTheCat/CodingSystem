@@ -1,10 +1,29 @@
 #include <iostream>
 #include <cstdlib>
+#include <limits>
 
 #include "../include/Cryptology"
 #include "../include/Settings"
 
 using namespace std;
+
+void Remove_Invalid(char str[])
+{
+    int i = 0, j = 0;
+    while (str[j] != 0)
+    {
+        if (!(str[j] >= 'a' && str[j] <= 'z' || str[j] >= 'A' && str[j] <= 'Z'))
+            j += 1;
+        else 
+        {
+            if (i != j)
+                str[i] = str[j];
+            i += 1;
+            j += 1;
+        }
+    }
+    str[i] = str[j];
+}
 
 void Capitalize(char str[])
 {
@@ -15,17 +34,16 @@ void Capitalize(char str[])
             str[i] -= 32;
         i += 1;
     }
+    return;
 }
 
-void Format(char str[])
+void Remove_Replication(char str[])
 {
     bool flag[26] = {false};
     int i = 0, j = 0;
     while (str[j] != 0)
     {
-        if (str[i] == ' ')
-            j += 1;
-        else if (flag[str[j] - 65] == false)
+        if (flag[str[j] - 65] == false)
         {
             if (i != j)
                 flag[i] = flag[j];
@@ -33,32 +51,30 @@ void Format(char str[])
             i += 1;
             j += 1;
         }
-        else if (flag[str[j] - 65] == true)
+        else
             j += 1;
     }
     str[i] = str[j]; 
+    return;
 }
 
 bool Deny_Str(char str[], int branch)
 {
-    while (1)
+    system("cls");
+    char res;
+    switch (branch)
     {
-        system("cls");
-        char res;
-        switch (branch)
-        {
-            case 0:
-                cout << "Enter Y/N to CONFIRM/DENY your key: ";
-                break;
-            case 1:
-                cout << "Enter Y/N to CONFIRM/DENY your message: ";
-                break;
-        }
-        cin.get(res);
-        cin.get();
-        if (res == 'Y' || res == 'y')
-            return false;
-        else if (res == 'N' || res == 'n')
-            return true;
+        case 0:
+            cout << "Enter Y/N to CONFIRM/DENY your key: ";
+            break;
+        case 1:
+            cout << "Enter Y/N to CONFIRM/DENY your message: ";
+            break;
     }
+    cin.get(res);
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    if (res == 'Y' || res == 'y')
+        return false;
+    else
+        return true;
 }

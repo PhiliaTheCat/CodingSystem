@@ -2,8 +2,9 @@
     #define __INCLUDE_CRYPTOLOGY__
 
     // String Proceeding
+    void Remove_Invalid(char key[]);
     void Capitalize(char key[]);
-    void Format(char key[]);
+    void Remove_Replication(char key[]);
 
     // Confirmation
     bool Deny_Str(char str[], int branch);

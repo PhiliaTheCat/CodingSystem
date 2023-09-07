@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 
 #include "../include/Main_Menu"
 
@@ -31,7 +32,7 @@ int Make_Decision()
         
         cout << "Your Option: ";
         cin >> decision;
-        cin.get();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     return decision;
 }

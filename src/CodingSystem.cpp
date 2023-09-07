@@ -21,4 +21,6 @@ int main()
             Encryption();
             break;
     }
+    
+    return 0;
 }
