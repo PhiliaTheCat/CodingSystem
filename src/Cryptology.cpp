@@ -23,6 +23,7 @@ void Remove_Invalid(char str[])
         }
     }
     str[i] = str[j];
+    return;
 }
 
 void Capitalize(char str[])
@@ -36,6 +37,7 @@ void Capitalize(char str[])
     }
     return;
 }
+
 
 void Remove_Replication(char str[])
 {
@@ -77,4 +79,25 @@ bool Deny_Str(char str[], int branch)
         return false;
     else
         return true;
+}
+
+void Complete_Key(char key[])
+{
+    bool flag[26] = {};
+    int i = 0;
+    while (key[i] != 0)
+    {
+        flag[key[i] - 'A'] = true;
+        i += 1;
+    }
+    for (int j = 0; j < 26; j += 1)
+    {
+        if (!flag[j])
+        {
+            key[i] = 'A' + j;
+            i += 1;
+        }
+    }
+    key[i] = 0;
+    return;
 }

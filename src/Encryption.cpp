@@ -40,6 +40,9 @@ void Encryption()
     }
     while (Deny_Str(mes, 1));
 
+    Complete_Key(key);
+    
+
     delete [] key;
     delete [] mes;
     delete [] res;

@@ -1,3 +1,6 @@
+# C++  Properties
 lib/*.lib
 bin/*.exe
-output.txt
+
+# VS C Properties
+.vscode

@@ -1,7 +1,9 @@
 bin/CodingSystem.exe: lib/Settings.lib lib/Main_Menu.lib \
-	lib/Encryption.lib lib/Cryptology.lib lib/CodingSystem.lib
+	                  lib/Encryption.lib lib/Cryptology.lib \
+					  lib/CodingSystem.lib
 	g++ lib/Settings.lib lib/Main_Menu.lib \
-		lib/Encryption.lib lib/Cryptology.lib lib/CodingSystem.lib \
+		lib/Encryption.lib lib/Cryptology.lib \
+		lib/CodingSystem.lib \
 		-o bin/CodingSystem.exe
 
 lib/Settings.lib: src/Settings.cpp

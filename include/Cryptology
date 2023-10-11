@@ -1,7 +1,7 @@
 #ifndef __INCLUDE_CRYPTOLOGY__
     #define __INCLUDE_CRYPTOLOGY__
 
-    // String Proceeding
+    // String Processing
     void Remove_Invalid(char key[]);
     void Capitalize(char key[]);
     void Remove_Replication(char key[]);
@@ -9,5 +9,6 @@
     // Confirmation
     bool Deny_Str(char str[], int branch);
 
-    
+    // Key Completion
+    void Complete_Key(char key[]);
 #endif

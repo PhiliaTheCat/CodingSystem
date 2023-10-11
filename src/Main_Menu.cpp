@@ -37,7 +37,7 @@ int Make_Decision()
     return decision;
 }
 
-inline bool Decision_Is_Valid(int &decision)
+bool Decision_Is_Valid(int &decision)
 {
     if (decision >= 0 && decision <= 4)
         return true;
