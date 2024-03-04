@@ -7,8 +7,6 @@
 
 using namespace std;
 
-extern Global_Settings global;
-
 void Encryption()
 {
     char *key = new char [global.max_key + 1];
@@ -42,7 +40,6 @@ void Encryption()
 
     Complete_Key(key);
     
-
     delete [] key;
     delete [] mes;
     delete [] res;

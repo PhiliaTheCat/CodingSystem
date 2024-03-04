@@ -8,6 +8,8 @@
         int logs_sequence; // Sequence when display logs
     };
 
+    extern Global_Settings global;
+
     // Provide pre-settings before execution
-    void Preset();
+    inline void Preset();
 #endif

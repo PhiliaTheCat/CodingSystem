@@ -1,6 +1,6 @@
 # C++  Properties
-lib/*.lib
-bin/*.exe
+*.exe
+*.obj
 
 # VS C Properties
 .vscode

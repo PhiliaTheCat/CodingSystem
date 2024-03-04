@@ -7,8 +7,6 @@
 
 using namespace std;
 
-extern Global_Settings global;
-
 int main()
 {
     Preset();

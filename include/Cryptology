@@ -2,13 +2,13 @@
     #define __INCLUDE_CRYPTOLOGY__
 
     // String Processing
-    void Remove_Invalid(char key[]);
-    void Capitalize(char key[]);
-    void Remove_Replication(char key[]);
+    inline void Remove_Invalid(char key[]);
+    inline void Capitalize(char key[]);
+    inline void Remove_Replication(char key[]);
 
     // Confirmation
-    bool Deny_Str(char str[], int branch);
+    inline bool Deny_Str(char str[], int branch);
 
     // Key Completion
-    void Complete_Key(char key[]);
+    inline void Complete_Key(char key[]);
 #endif

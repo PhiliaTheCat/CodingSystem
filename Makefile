@@ -1,26 +1,33 @@
-bin/CodingSystem.exe: lib/Settings.lib lib/Main_Menu.lib \
-	                  lib/Encryption.lib lib/Cryptology.lib \
-					  lib/CodingSystem.lib
-	g++ lib/Settings.lib lib/Main_Menu.lib \
-		lib/Encryption.lib lib/Cryptology.lib \
-		lib/CodingSystem.lib \
-		-o bin/CodingSystem.exe
+CPP = cl
+LK = link
+RM = del
 
-lib/Settings.lib: src/Settings.cpp
-	g++ -c src/Settings.cpp -o lib/Settings.lib
+CPPFLAGS = /nologo /EHa /O2 /W3 /GL /c
+LKFLAGS = /nologo /ltcg
 
-lib/Main_Menu.lib: src/Main_Menu.cpp 
-	g++ -c src/Main_Menu.cpp -o lib/Main_Menu.lib
+OBJ = Settings.obj Main_Menu.obj Cryptology.obj CodingSystem.obj Encryption.obj
 
-lib/Encryption.lib: src/Encryption.cpp
-	g++ -c src/Encryption.cpp -o lib/Encryption.lib
+all: $(OBJ)
+	$(LK) $(LKFLAGS) /out:CodingSystem.exe $**
 
-lib/Cryptology.lib: src/Cryptology.cpp
-	g++ -c src/Cryptology.cpp -o lib/Cryptology.lib
+Settings.obj: src\$*.cpp
+	$(CPP) $(CPPFLAGS) /Fo:$@ $**
 
-lib/CodingSystem.lib: src/CodingSystem.cpp 
-	g++ -c src/CodingSystem.cpp -o lib/CodingSystem.lib
+Main_Menu.obj: src\$*.cpp
+	$(CPP) $(CPPFLAGS) /Fo:$@ $**
 
-run: bin/CodingSystem.exe
-	./bin/CodingSystem.exe
-	
+Cryptology.obj: src\$*.cpp
+	$(CPP) $(CPPFLAGS) /Fo:$@ $**
+
+CodingSystem.obj: src\$*.cpp
+	$(CPP) $(CPPFLAGS) /Fo:$@ $**
+
+Encryption.obj: src\$*.cpp
+	$(CPP) $(CPPFLAGS) /Fo:$@ $**
+
+clean: 
+	$(RM) *.obj
+	$(RM) *.exe
+
+test:
+	.\CodingSystem.exe
