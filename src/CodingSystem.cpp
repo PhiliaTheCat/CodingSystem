@@ -5,6 +5,8 @@
 #include "../include/Main_Menu"
 #include "../include/Encryption"
 
+Global_Settings global;
+
 using namespace std;
 
 int main()

@@ -1,5 +1,5 @@
 #ifndef __INCLUDE_ENCRYPTION__
-    #define __INCLUDE_ENCRYPTION__
+#define __INCLUDE_ENCRYPTION__
 
-    void Encryption();
+void Encryption();
 #endif

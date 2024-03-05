@@ -36,16 +36,3 @@ int Make_Decision()
     }
     return decision;
 }
-
-bool Decision_Is_Valid(int &decision)
-{
-    if (decision >= 0 && decision <= 4)
-        return true;
-    else if (decision == DECISION_INVALID_DEFAULT)
-        return false;
-    else 
-    {
-        decision = DECISION_INVALID_NUMBER_EXCEEDED;
-        return false;
-    }
-}
