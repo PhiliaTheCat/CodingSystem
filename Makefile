@@ -2,7 +2,7 @@ CPP = cl
 LK = link
 RM = del
 
-CPPFLAGS = /nologo /std:c++latest /EHa /O2 /W3 /GL /c
+CPPFLAGS = /nologo /std:c++17 /EHa /O2 /W3 /GL /c
 LKFLAGS = /nologo /ltcg
 
 OBJ = Main_Menu.obj Cryptology.obj CodingSystem.obj Encryption.obj
