@@ -5,7 +5,7 @@ RM = del
 CPPFLAGS = /nologo /std:c++17 /EHa /O2 /W3 /GL /c
 LKFLAGS = /nologo /ltcg
 
-OBJ = Main_Menu.obj Cryptology.obj CodingSystem.obj Encryption.obj
+OBJ = Main_Menu.obj Cryptology.obj Encryption.obj CodingSystem.obj 
 
 all: $(OBJ)
 	$(LK) $(LKFLAGS) /out:CodingSystem.exe $**
@@ -13,10 +13,10 @@ all: $(OBJ)
 Main_Menu.obj: src\$*.cpp
 	$(CPP) $(CPPFLAGS) /Fo:$@ $**
 
-Cryptology.obj: src\$*.cpp
+CodingSystem.obj: src\$*.cpp
 	$(CPP) $(CPPFLAGS) /Fo:$@ $**
 
-CodingSystem.obj: src\$*.cpp
+Cryptology.obj: src\$*.cpp
 	$(CPP) $(CPPFLAGS) /Fo:$@ $**
 
 Encryption.obj: src\$*.cpp

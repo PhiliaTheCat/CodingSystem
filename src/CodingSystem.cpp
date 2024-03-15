@@ -18,8 +18,8 @@ int main()
     switch (decision)
     {
         case DECISION_ENCRYPTION:
-            Encryption();
-            break;
+        Encryption();
+        break;
     }
     
     return 0;

@@ -1,25 +1,11 @@
 #ifndef __INCLUDE_CRYPTOLOGY__
 #define __INCLUDE_CRYPTOLOGY__
 
+#include <iostream>
+#include <limits>
+
 // String Processing
-inline void Remove_Invalid(char str[])
-{
-    int i = 0, j = 0;
-    while (str[j] != 0)
-    {
-        if (!(str[j] >= 'a' && str[j] <= 'z' || str[j] >= 'A' && str[j] <= 'Z'))
-            j += 1;
-        else 
-        {
-            if (i != j)
-                str[i] = str[j];
-            i += 1;
-            j += 1;
-        }
-    }
-    str[i] = str[j];
-    return;
-}
+void Remove_Invalid(char str[]);
 
 inline void Capitalize(char str[])
 {
@@ -33,26 +19,7 @@ inline void Capitalize(char str[])
     return;
 }
 
-inline void Remove_Replication(char str[])
-{
-    bool flag[26] = {false};
-    int i = 0, j = 0;
-    while (str[j] != 0)
-    {
-        if (flag[str[j] - 65] == false)
-        {
-            if (i != j)
-                flag[i] = flag[j];
-            flag[str[j] - 65] = true;
-            i += 1;
-            j += 1;
-        }
-        else
-            j += 1;
-    }
-    str[i] = str[j]; 
-    return;
-}
+void Remove_Replication(char str[]);
 
 // Confirmation
 bool Deny_Str(char str[], int branch);

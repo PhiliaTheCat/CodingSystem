@@ -22,12 +22,12 @@ int Make_Decision()
         switch (decision)
         {
             case DECISION_INVALID_DEFAULT:
-                cout << "Please type in the number attached to your option\n";
-                break;
+            cout << "Please type in the number attached to your option\n";
+            break;
             case DECISION_INVALID_NUMBER_EXCEEDED:
-                cerr << "Invalid: Number Exceeded\n";
-                cout << "Please type in a number again\n";
-                break;
+            cerr << "Invalid: Number Exceeded\n";
+            cout << "Please type in a number again\n";
+            break;
         }
         
         cout << "Your Option: ";
