@@ -1,0 +1,30 @@
+#ifndef __INCLUDE_CRYPTOLOGY__
+#define __INCLUDE_CRYPTOLOGY__
+
+#include <iostream>
+#include <limits>
+
+// String Processing
+void Remove_Invalid(char str[]);
+
+inline void Capitalize(char str[])
+{
+    int i = 0;
+    while (str[i] != 0)
+    {
+        if (str[i] >= 'a' && str[i] <= 'z')
+            str[i] -= 32;
+        i += 1;
+    }
+    return;
+}
+
+void Remove_Replication(char str[]);
+
+// Confirmation
+bool Deny_Str(char str[], int branch);
+
+// Key Completion
+void Complete_Key(char key[]);
+
+#endif
