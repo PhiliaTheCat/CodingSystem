@@ -1,28 +1,58 @@
 #ifndef __INCLUDE_MAIN_MENU__
 #define __INCLUDE_MAIN_MENU__
 
-constexpr int DECISION_INVALID_DEFAULT = -1;
-constexpr int DECISION_INVALID_NUMBER_EXCEEDED = -2;
+enum class Decision
+{
+    DECISION_INVALID_DEFAULT,
+    DECISION_INVALID_NUMBER_EXCEEDED,
 
-constexpr int DECISION_ENCRYPTION = 0;
-constexpr int DECISION_DECRYPTION = 1;
-constexpr int DECISION_LOGS = 2;
-constexpr int DECISION_SETTINGS = 3;
-constexpr int DECISION_EXIT = 4;
+    DECISION_ENCRYPTION,
+    DECISION_DECRYPTION,
+    DECISION_LOGS,
+    DECISION_SETTINGS,
+    DECISION_EXIT
+};
 
 // Get User's option
-int Make_Decision();
+Decision Make_Decision();
 
-inline bool Decision_Is_Valid(int &decision)
+inline bool Decision_Is_Valid(Decision &decision)
 {
-    if (decision >= 0 && decision <= 4)
-        return true;
-    else if (decision == DECISION_INVALID_DEFAULT)
-        return false;
-    else 
+    switch (decision)
     {
-        decision = DECISION_INVALID_NUMBER_EXCEEDED;
+        case Decision::DECISION_ENCRYPTION:
+        case Decision::DECISION_DECRYPTION:
+        case Decision::DECISION_LOGS:
+        case Decision::DECISION_SETTINGS:
+        case Decision::DECISION_EXIT:
+        return true;
+
+        default:
         return false;
+    }
+}
+
+inline Decision Decision_Update(const int &t)
+{
+    switch (t)
+    {
+        case 0:
+        return Decision::DECISION_ENCRYPTION;
+        
+        case 1:
+        return Decision::DECISION_DECRYPTION;
+
+        case 2:
+        return Decision::DECISION_LOGS;
+
+        case 3:
+        return Decision::DECISION_SETTINGS;
+
+        case 4:
+        return Decision::DECISION_EXIT;
+
+        default:
+        return Decision::DECISION_INVALID_NUMBER_EXCEEDED;
     }
 }
 

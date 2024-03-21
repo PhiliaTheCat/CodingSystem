@@ -13,11 +13,11 @@ int main()
 {
     Preset();
 
-    int decision = Make_Decision();
+    Decision decision = Make_Decision();
     
     switch (decision)
     {
-        case DECISION_ENCRYPTION:
+        case Decision::DECISION_ENCRYPTION:
         Encryption();
         break;
     }

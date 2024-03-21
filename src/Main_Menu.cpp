@@ -6,9 +6,9 @@
 
 using namespace std;
 
-int Make_Decision()
+Decision Make_Decision()
 {
-    int decision = DECISION_INVALID_DEFAULT;
+    Decision decision = Decision::DECISION_INVALID_DEFAULT;
 
     while (!Decision_Is_Valid(decision))
     {
@@ -21,17 +21,21 @@ int Make_Decision()
 
         switch (decision)
         {
-            case DECISION_INVALID_DEFAULT:
+            case Decision::DECISION_INVALID_DEFAULT:
             cout << "Please type in the number attached to your option\n";
             break;
-            case DECISION_INVALID_NUMBER_EXCEEDED:
+            case Decision::DECISION_INVALID_NUMBER_EXCEEDED:
             cerr << "Invalid: Number Exceeded\n";
             cout << "Please type in a number again\n";
             break;
         }
         
         cout << "Your Option: ";
-        cin >> decision;
+        int t;
+        cin >> t;
+
+        decision = Decision_Update(t);
+
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     return decision;

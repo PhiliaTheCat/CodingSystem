@@ -1,6 +1,9 @@
-# C++  Properties
+# C++ Properties
 *.exe
 *.obj
 
 # VS C Properties
 .vscode
+
+# CMake Properties
+build
