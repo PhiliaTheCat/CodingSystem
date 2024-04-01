@@ -19,7 +19,6 @@ void Remove_Invalid(char str[])
         }
     }
     str[i] = str[j];
-    return;
 }
 
 void Remove_Replication(char str[])
@@ -28,7 +27,7 @@ void Remove_Replication(char str[])
     int i = 0, j = 0;
     while (str[j] != 0)
     {
-        if (flag[str[j] - 65] == false)
+        if (!flag[str[j] - 65])
         {
             if (i != j)
                 flag[i] = flag[j];
@@ -39,8 +38,7 @@ void Remove_Replication(char str[])
         else
             j += 1;
     }
-    str[i] = str[j]; 
-    return;
+    str[i] = str[j];
 }
 
 bool Deny_Str(char str[], int branch)
@@ -49,12 +47,13 @@ bool Deny_Str(char str[], int branch)
     char res;
     switch (branch)
     {
-        case 0:
+    case 0:
         std::cout << "Enter Y/N to CONFIRM/DENY your key: ";
         break;
-        case 1:
+    case 1:
         std::cout << "Enter Y/N to CONFIRM/DENY your message: ";
         break;
+    default:;
     }
     std::cin.get(res);
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -82,5 +81,4 @@ void Complete_Key(char key[])
         }
     }
     key[i] = 0;
-    return;
 }

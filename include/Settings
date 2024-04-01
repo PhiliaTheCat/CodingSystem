@@ -27,7 +27,6 @@ inline void Preset()
     fin >> global.max_key >> global.max_str >> global.logs_sequence;
     fin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     fin.close();
-    return;
 }
 
 #endif

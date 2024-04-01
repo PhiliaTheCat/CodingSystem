@@ -2,4 +2,5 @@
 #define __INCLUDE_ENCRYPTION__
 
 void Encryption();
+
 #endif

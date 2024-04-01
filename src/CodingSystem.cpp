@@ -17,7 +17,7 @@ int main()
     
     switch (decision)
     {
-        case Decision::DECISION_ENCRYPTION:
+    case Decision::DECISION_ENCRYPTION:
         Encryption();
         break;
     }
