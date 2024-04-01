@@ -1,6 +1,3 @@
-#include <iostream>
-#include <cstdlib>
-
 #include "../include/Settings"
 #include "../include/Main_Menu"
 #include "../include/Encryption"
@@ -20,6 +17,16 @@ int main()
     case Decision::DECISION_ENCRYPTION:
         Encryption();
         break;
+
+    case Decision::DECISION_DECRYPTION:
+        Decryption();
+        break;
+
+    case Decision::DECISION_LOGS:
+
+    case Decision::DECISION_SETTINGS:
+
+    default:;
     }
     
     return 0;

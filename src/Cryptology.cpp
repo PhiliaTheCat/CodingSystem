@@ -76,7 +76,7 @@ void Complete_Key(char key[])
     {
         if (!flag[j])
         {
-            key[i] = 'A' + j;
+            key[i] = char('A' + j);
             i += 1;
         }
     }

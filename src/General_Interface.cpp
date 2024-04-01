@@ -44,5 +44,4 @@ void Encryption()
     delete [] mes;
     delete [] res;
 
-    return;
 }
