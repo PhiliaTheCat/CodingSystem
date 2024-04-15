@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
 
-#include "../include/Cryptology"
+#include "../include/Utilities"
 
 void Remove_Invalid(char str[])
 {
@@ -41,7 +41,7 @@ void Remove_Replication(char str[])
     str[i] = str[j];
 }
 
-bool Deny_Str(char str[], int branch)
+bool Deny_Str(int branch)
 {
     system("cls");
     char res;

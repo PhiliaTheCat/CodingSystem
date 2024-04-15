@@ -21,7 +21,7 @@ inline void Capitalize(char str[])
 void Remove_Replication(char str[]);
 
 // Confirmation
-bool Deny_Str(char str[], int branch);
+bool Deny_Str(int branch);
 
 // Key Completion
 void Complete_Key(char key[]);

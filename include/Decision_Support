@@ -1,5 +1,5 @@
-#ifndef __INCLUDE_MAIN_MENU__
-#define __INCLUDE_MAIN_MENU__
+#ifndef __INCLUDED_DECISION_SUPPORT__
+#define __INCLUDED_DECISION_SUPPORT__
 
 enum class Decision
 {
@@ -13,21 +13,24 @@ enum class Decision
     DECISION_EXIT
 };
 
-// Get User's option
-Decision Make_Decision();
+enum class Decision_Error
+{
+    DECISION_INVALID_DEFAULT,
+    DECISION_INVALID_NUMBER_EXCEEDED
+};
 
 inline bool Decision_Is_Valid(Decision &decision)
 {
     switch (decision)
     {
-        case Decision::DECISION_ENCRYPTION:
-        case Decision::DECISION_DECRYPTION:
-        case Decision::DECISION_LOGS:
-        case Decision::DECISION_SETTINGS:
-        case Decision::DECISION_EXIT:
+    case Decision::DECISION_ENCRYPTION:
+    case Decision::DECISION_DECRYPTION:
+    case Decision::DECISION_LOGS:
+    case Decision::DECISION_SETTINGS:
+    case Decision::DECISION_EXIT:
         return true;
 
-        default:
+    default:
         return false;
     }
 }
@@ -36,22 +39,22 @@ inline Decision Decision_Update(const int &t)
 {
     switch (t)
     {
-        case 0:
+    case 0:
         return Decision::DECISION_ENCRYPTION;
-        
-        case 1:
+
+    case 1:
         return Decision::DECISION_DECRYPTION;
 
-        case 2:
+    case 2:
         return Decision::DECISION_LOGS;
 
-        case 3:
+    case 3:
         return Decision::DECISION_SETTINGS;
 
-        case 4:
+    case 4:
         return Decision::DECISION_EXIT;
 
-        default:
+    default:
         return Decision::DECISION_INVALID_NUMBER_EXCEEDED;
     }
 }

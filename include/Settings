@@ -17,7 +17,7 @@ struct Global_Settings
     {}
 };
 
-extern Global_Settings global;
+inline Global_Settings global;
 
 // Provide pre-settings before execution
 inline void Preset()

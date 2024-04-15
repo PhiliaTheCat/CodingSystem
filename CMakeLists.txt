@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
+
 project(CodingSystem)
 
-add_executable(CodingSystem ./src/CodingSystem.cpp ./src/Cryptology.cpp ./src/Main_Menu.cpp ./src/Encryption.cpp)
+add_executable(CodingSystem ./src/CodingSystem.cpp src/Utilities.cpp ./src/General_Interface.cpp)

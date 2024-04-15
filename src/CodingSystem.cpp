@@ -1,8 +1,6 @@
 #include "../include/Settings"
-#include "../include/Main_Menu"
-#include "../include/Encryption"
-
-Global_Settings global;
+#include "../include/General_Interface"
+#include "../include/Decision_Support"
 
 using namespace std;
 
@@ -19,7 +17,7 @@ int main()
         break;
 
     case Decision::DECISION_DECRYPTION:
-        Decryption();
+        // Decryption();
         break;
 
     case Decision::DECISION_LOGS:
