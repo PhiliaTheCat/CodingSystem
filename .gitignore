@@ -1,6 +1,5 @@
-# C++ Properties
-*.exe
-*.obj
-
 # CMake Properties
-build
+cmake-build*
+
+# CLion Properties
+.idea
