@@ -3,7 +3,7 @@
 #include <limits>
 
 #include "../include/General_Interface"
-#include "../include/Settings"
+#include "Settings"
 #include "../include/Utilities"
 #include "../include/Decision_Support"
 

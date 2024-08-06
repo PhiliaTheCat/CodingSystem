@@ -1,4 +1,4 @@
-#include "../include/Settings"
+#include "Settings"
 #include "../include/General_Interface"
 #include "../include/Decision_Support"
 
@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    Preset();
+    preset();
 
     Decision decision = Make_Decision();
     

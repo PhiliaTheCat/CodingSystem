@@ -4,23 +4,35 @@
 #include <fstream>
 #include <limits>
 
-struct Global_Settings
+struct GlobalSettings
 {
-    public:
+public:
     int max_key; // Maximum key length
     int max_str; // Maximum string length
     int logs_sequence; // Sequence when display logs
 
-    public:
-    inline Global_Settings()
-    : max_key(0), max_str(0), logs_sequence(0)
-    {}
+private:
+    GlobalSettings() = default;
+
+public:
+    GlobalSettings(const GlobalSettings &) = delete;
+    GlobalSettings(GlobalSettings &&) = delete;
+
+    GlobalSettings &operator =(const GlobalSettings &) = delete;
+    GlobalSettings &operator =(GlobalSettings &&) = delete;
+
+    static GlobalSettings &getGlobal()
+    {
+        static GlobalSettings instance;
+
+        return instance;
+    }
 };
 
-inline Global_Settings global;
+inline GlobalSettings &global = GlobalSettings::getGlobal();
 
 // Provide pre-settings before execution
-inline void Preset()
+inline void preset()
 {
     std::ifstream fin;
     fin.open("./settings/presettings.txt");
