@@ -1,9 +1,9 @@
 #include <iostream>
 #include <limits>
 
-#include "../include/Utilities"
+#include "Utilities"
 
-void Remove_Invalid(char str[])
+void removeInvalid(char str[])
 {
     int i = 0, j = 0;
     while (str[j] != 0)
@@ -21,7 +21,7 @@ void Remove_Invalid(char str[])
     str[i] = str[j];
 }
 
-void Remove_Replication(char str[])
+void removeReplication(char str[])
 {
     bool flag[26] = {false};
     int i = 0, j = 0;
@@ -41,7 +41,7 @@ void Remove_Replication(char str[])
     str[i] = str[j];
 }
 
-bool Deny_Str(int branch)
+bool denyStr(int branch)
 {
     system("cls");
     char res;
@@ -63,7 +63,7 @@ bool Deny_Str(int branch)
         return true;
 }
 
-void Complete_Key(char key[])
+void completeKey(char key[])
 {
     bool flag[26] = {};
     int i = 0;

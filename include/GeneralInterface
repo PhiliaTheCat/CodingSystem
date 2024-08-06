@@ -1,12 +1,12 @@
 #ifndef __INCLUDED_GENERAL_INTERFACE__
 #define __INCLUDED_GENERAL_INTERFACE__
 
-enum class Decision;
+#include "DecisionSupport"
 
-Decision Make_Decision();
+Decision makeDecision();
 
-void Encryption();
+void encryption();
 
-void Decryption();
+void decryption();
 
 #endif

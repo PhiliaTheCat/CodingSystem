@@ -1,28 +1,26 @@
 #include "Settings"
-#include "../include/General_Interface"
-#include "../include/Decision_Support"
+#include "GeneralInterface"
+#include "DecisionSupport"
 
 using namespace std;
 
 int main()
 {
     preset();
-
-    Decision decision = Make_Decision();
     
-    switch (decision)
+    switch (makeDecision())
     {
-    case Decision::DECISION_ENCRYPTION:
-        Encryption();
+    case Decision::ENCRYPTION:
+        encryption();
         break;
 
-    case Decision::DECISION_DECRYPTION:
-        // Decryption();
+    case Decision::DECRYPTION:
+        // decryption();
         break;
 
-    case Decision::DECISION_LOGS:
+    case Decision::LOGS:
 
-    case Decision::DECISION_SETTINGS:
+    case Decision::SETTINGS:
 
     default:;
     }

@@ -1,13 +1,10 @@
 #ifndef __INCLUDED_CRYPTOLOGY__
 #define __INCLUDED_CRYPTOLOGY__
 
-#include <iostream>
-#include <limits>
-
 // String Processing
-void Remove_Invalid(char str[]);
+void removeInvalid(char str[]);
 
-inline void Capitalize(char str[])
+inline void capitalize(char str[])
 {
     int i = 0;
     while (str[i] != 0)
@@ -18,12 +15,12 @@ inline void Capitalize(char str[])
     }
 }
 
-void Remove_Replication(char str[]);
+void removeReplication(char str[]);
 
 // Confirmation
-bool Deny_Str(int branch);
+bool denyStr(int branch);
 
 // Key Completion
-void Complete_Key(char key[]);
+void completeKey(char key[]);
 
 #endif
