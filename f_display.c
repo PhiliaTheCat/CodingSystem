@@ -6,6 +6,8 @@
 #include "f_display.h"
 #include "f_process.h"
 
+#define _CRT_SECURE_NO_WARNINGS
+
 typedef struct node
 {
     char *d; //Date

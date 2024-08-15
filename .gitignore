@@ -1,2 +1,5 @@
-logs.txt
-CodingSystem.exe
+# CLion Properties
+.idea
+
+# CMake Properties
+cmake-build-*
