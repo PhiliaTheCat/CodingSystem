@@ -1,8 +1,10 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.20)
 
-project(CodingSystem C)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_C_STANDARD 17)
+project(CodingSystem)
 
-add_executable(CodingSystem CodingSystem.c f_display.c f_process.c)
+add_executable(CodingSystem src/CodingSystem.cpp src/GeneralInterface.cpp src/Settings.cpp src/StringProcess.cpp)
+
+target_include_directories(CodingSystem PUBLIC include)

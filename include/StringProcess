@@ -1,0 +1,15 @@
+#ifndef __INCLUDED_CRYPTOLOGY__
+#define __INCLUDED_CRYPTOLOGY__
+
+// String Processing
+void removeInvalid(char str[]);
+void capitalize(char str[]);
+void removeReplication(char str[]);
+
+// Confirmation
+bool denyStr(int branch);
+
+// Key Completion
+void completeKey(char key[]);
+
+#endif

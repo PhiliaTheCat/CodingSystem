@@ -1,0 +1,34 @@
+#ifndef __INCLUDE_SETTINGS__
+#define __INCLUDE_SETTINGS__
+
+struct GlobalSettings
+{
+    int max_key; // Maximum key length
+    int max_str; // Maximum string length
+    int logs_sequence; // Sequence when display logs
+
+private:
+    GlobalSettings() = default;
+    ~GlobalSettings() = default;
+
+public:
+    GlobalSettings(const GlobalSettings &) = delete;
+    GlobalSettings(GlobalSettings &&) = delete;
+
+    GlobalSettings &operator =(const GlobalSettings &) = delete;
+    GlobalSettings &operator =(GlobalSettings &&) = delete;
+
+    static GlobalSettings &init()
+    {
+        static GlobalSettings instance;
+
+        return instance;
+    }
+};
+
+inline GlobalSettings &global = GlobalSettings::init();
+
+// Provide preset before starting execution
+void preset();
+
+#endif

@@ -1,0 +1,15 @@
+#ifndef __INCLUDED_GENERAL_INTERFACE__
+#define __INCLUDED_GENERAL_INTERFACE__
+
+#include "DecisionSupport"
+
+Decision makeDecision();
+
+void encryption();
+void decryption();
+
+void displayLogs();
+
+void settings();
+
+#endif

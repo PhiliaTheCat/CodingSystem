@@ -1,0 +1,56 @@
+#ifndef __INCLUDED_DECISION_SUPPORT__
+#define __INCLUDED_DECISION_SUPPORT__
+
+enum class Decision
+{
+    INVALID_DEFAULT,
+    INVALID_NUMBER_EXCEEDED,
+
+    ENCRYPTION,
+    DECRYPTION,
+    LOGS,
+    SETTINGS,
+    EXIT
+};
+
+inline bool decisionIsValid(const Decision &decision)
+{
+    switch (decision)
+    {
+    case Decision::ENCRYPTION:
+    case Decision::DECRYPTION:
+    case Decision::LOGS:
+    case Decision::SETTINGS:
+    case Decision::EXIT:
+        return true;
+
+    default:
+        return false;
+    }
+}
+
+inline Decision decisionUpdate(const int &t)
+{
+    switch (t)
+    {
+    case 0:
+        return Decision::ENCRYPTION;
+
+    case 1:
+        return Decision::DECRYPTION;
+
+    case 2:
+        return Decision::LOGS;
+
+    case 3:
+        return Decision::SETTINGS;
+
+    case 4:
+        return Decision::EXIT;
+
+    default:
+        return Decision::INVALID_NUMBER_EXCEEDED;
+    }
+}
+
+#endif
