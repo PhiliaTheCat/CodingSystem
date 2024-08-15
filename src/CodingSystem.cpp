@@ -2,8 +2,6 @@
 #include "GeneralInterface"
 #include "DecisionSupport"
 
-using namespace std;
-
 int main()
 {
     preset();
@@ -15,14 +13,18 @@ int main()
         break;
 
     case Decision::DECRYPTION:
-        // decryption();
+        decryption();
         break;
 
     case Decision::LOGS:
+        displayLogs();
+        break;
 
     case Decision::SETTINGS:
+        settings();
+        break;
 
-    default:;
+    default: break;
     }
     
     return 0;

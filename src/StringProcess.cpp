@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
 
-#include "Utilities"
+#include "StringProcess"
 
 void removeInvalid(char str[])
 {
@@ -19,6 +19,17 @@ void removeInvalid(char str[])
         }
     }
     str[i] = str[j];
+}
+
+void capitalize(char str[])
+{
+    int i = 0;
+    while (str[i] != 0)
+    {
+        if (str[i] >= 'a' && str[i] <= 'z')
+            str[i] -= 32;
+        i += 1;
+    }
 }
 
 void removeReplication(char str[])

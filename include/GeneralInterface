@@ -6,7 +6,10 @@
 Decision makeDecision();
 
 void encryption();
-
 void decryption();
+
+void displayLogs();
+
+void settings();
 
 #endif

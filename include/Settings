@@ -1,18 +1,15 @@
 #ifndef __INCLUDE_SETTINGS__
 #define __INCLUDE_SETTINGS__
 
-#include <fstream>
-#include <limits>
-
 struct GlobalSettings
 {
-public:
     int max_key; // Maximum key length
     int max_str; // Maximum string length
     int logs_sequence; // Sequence when display logs
 
 private:
     GlobalSettings() = default;
+    ~GlobalSettings() = default;
 
 public:
     GlobalSettings(const GlobalSettings &) = delete;
@@ -21,7 +18,7 @@ public:
     GlobalSettings &operator =(const GlobalSettings &) = delete;
     GlobalSettings &operator =(GlobalSettings &&) = delete;
 
-    static GlobalSettings &getGlobal()
+    static GlobalSettings &init()
     {
         static GlobalSettings instance;
 
@@ -29,16 +26,9 @@ public:
     }
 };
 
-inline GlobalSettings &global = GlobalSettings::getGlobal();
+inline GlobalSettings &global = GlobalSettings::init();
 
-// Provide pre-settings before execution
-inline void preset()
-{
-    std::ifstream fin;
-    fin.open("./settings/presettings.txt");
-    fin >> global.max_key >> global.max_str >> global.logs_sequence;
-    fin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    fin.close();
-}
+// Provide preset before starting execution
+void preset();
 
 #endif

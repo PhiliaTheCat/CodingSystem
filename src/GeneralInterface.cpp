@@ -4,7 +4,7 @@
 
 #include "GeneralInterface"
 #include "Settings"
-#include "Utilities"
+#include "StringProcess"
 #include "DecisionSupport"
 
 Decision makeDecision()
